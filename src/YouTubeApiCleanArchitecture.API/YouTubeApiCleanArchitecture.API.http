@@ -1,0 +1,6 @@
+@YouTubeApiCleanArchitecture.API_HostAddress = http://localhost:5169
+
+GET {{YouTubeApiCleanArchitecture.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

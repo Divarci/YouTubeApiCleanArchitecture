@@ -1,0 +1,50 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35514.174 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{3E4A3527-8166-4105-BDFB-1E068D172666}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{682E4782-97FC-4DBA-9C6B-A606946F50DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YouTubeApiCleanArchitecture.Domain", "src\YouTubeApiCleanArchitecture.Domain\YouTubeApiCleanArchitecture.Domain.csproj", "{138775DD-6EED-4AB1-8444-916B3AF14F96}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YouTubeApiCleanArchitecture.Application", "src\YouTubeApiCleanArchitecture.Application\YouTubeApiCleanArchitecture.Application.csproj", "{E358C487-A9F0-4B68-817B-D203F96CDAFB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YouTubeApiCleanArchitecture.Infrastructure", "src\YouTubeApiCleanArchitecture.Infrastructure\YouTubeApiCleanArchitecture.Infrastructure.csproj", "{81859433-0A3A-4901-8B13-77C2DC16513A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YouTubeApiCleanArchitecture.API", "src\YouTubeApiCleanArchitecture.API\YouTubeApiCleanArchitecture.API.csproj", "{2D7E6D45-F649-463A-B653-CC23E1D7CF45}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{138775DD-6EED-4AB1-8444-916B3AF14F96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{138775DD-6EED-4AB1-8444-916B3AF14F96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{138775DD-6EED-4AB1-8444-916B3AF14F96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{138775DD-6EED-4AB1-8444-916B3AF14F96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E358C487-A9F0-4B68-817B-D203F96CDAFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E358C487-A9F0-4B68-817B-D203F96CDAFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E358C487-A9F0-4B68-817B-D203F96CDAFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E358C487-A9F0-4B68-817B-D203F96CDAFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81859433-0A3A-4901-8B13-77C2DC16513A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81859433-0A3A-4901-8B13-77C2DC16513A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81859433-0A3A-4901-8B13-77C2DC16513A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81859433-0A3A-4901-8B13-77C2DC16513A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D7E6D45-F649-463A-B653-CC23E1D7CF45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D7E6D45-F649-463A-B653-CC23E1D7CF45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D7E6D45-F649-463A-B653-CC23E1D7CF45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D7E6D45-F649-463A-B653-CC23E1D7CF45}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{138775DD-6EED-4AB1-8444-916B3AF14F96} = {3E4A3527-8166-4105-BDFB-1E068D172666}
+		{E358C487-A9F0-4B68-817B-D203F96CDAFB} = {3E4A3527-8166-4105-BDFB-1E068D172666}
+		{81859433-0A3A-4901-8B13-77C2DC16513A} = {3E4A3527-8166-4105-BDFB-1E068D172666}
+		{2D7E6D45-F649-463A-B653-CC23E1D7CF45} = {3E4A3527-8166-4105-BDFB-1E068D172666}
+	EndGlobalSection
+EndGlobal
