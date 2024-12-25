@@ -55,7 +55,8 @@ public sealed class Invoice : BaseEntity
 
             var invoiceItem = new InvoiceItem(
                 Guid.NewGuid(),
-                new Money(product.UnitPrice.Value),
+                product.Description,
+                product.UnitPrice,
                 new Quantity(purchasedProduct.Quantity),
                 invoiceId);
 

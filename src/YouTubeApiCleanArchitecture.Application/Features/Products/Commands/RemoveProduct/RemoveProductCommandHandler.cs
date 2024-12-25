@@ -17,7 +17,7 @@ internal sealed class RemoveProductCommandHandler(
 
         if (product is null)
             return Result<NoContentDto>
-                .Failed(400, "Null.Error", $"The prouct with the id: {request.ProductId} not exist");
+                .Failed(400, "Null.Error", $"The product with the id: {request.ProductId} not exist");
 
         _unitOfWork.Repository<Product>()
             .Delete(product);

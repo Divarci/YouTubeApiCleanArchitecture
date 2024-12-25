@@ -15,5 +15,5 @@ public class CreateInvoiceDto : BaseInvoiceDto
 
 public class UpdateInvoiceDto : BaseInvoiceDto
 {
-    public Guid InvoceId { get; set; }
+    public Guid InvoiceId { get; set; }
 }

@@ -20,7 +20,7 @@ internal sealed class GetProductQueryHandler(
 
         if (product is null)
             return Result<ProductResponse>
-                .Failed(400, "Null.Error", $"The prouct with the id: {request.ProductId} not exist");
+                .Failed(400, "Null.Error", $"The product with the id: {request.ProductId} not exist");
 
         var reponse = _mapper.Map<ProductResponse>(product);
 

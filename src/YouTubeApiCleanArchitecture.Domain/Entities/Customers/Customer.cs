@@ -57,4 +57,9 @@ public sealed class Customer : BaseEntity
                 dto.City,
                 dto.Country);
     }
+
+    public void UpdateBalance(Money invoiceAmount)
+        => Balance = new Money(
+            Balance.Value + invoiceAmount.Value);
+    
 }

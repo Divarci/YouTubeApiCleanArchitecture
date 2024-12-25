@@ -17,7 +17,7 @@ internal sealed class UpdateProductCommandHandler(
 
         if (product is null)
             return Result<NoContentDto>
-                .Failed(400, "Null.Error", $"The prouct with the id: {request.Dto.ProductId} not exist");
+                .Failed(400, "Null.Error", $"The product with the id: {request.Dto.ProductId} not exist");
 
         product.Update(request.Dto);
 
