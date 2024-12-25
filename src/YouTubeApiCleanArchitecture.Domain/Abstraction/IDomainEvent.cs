@@ -1,2 +1,4 @@
-﻿namespace YouTubeApiCleanArchitecture.Domain.Abstraction;
-public interface IDomainEvent;
+﻿using MediatR;
+
+namespace YouTubeApiCleanArchitecture.Domain.Abstraction;
+public interface IDomainEvent : INotification;
