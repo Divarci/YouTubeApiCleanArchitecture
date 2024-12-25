@@ -21,13 +21,12 @@
     <Folder Include="Features\Invoices\Commands\UpdateInvoice\" />
     <Folder Include="Features\Invoices\Queries\GetAllInvoices\" />
     <Folder Include="Features\Invoices\Queries\GetInvoice\" />
-    <Folder Include="Features\Products\Queries\GetAllProducts\" />
-    <Folder Include="Features\Products\Queries\GetProduct\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="MediatR" Version="12.4.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.11" />
   </ItemGroup>
 
   <ItemGroup>

@@ -11,6 +11,11 @@ public class ProductResponse : IResult
 
 }
 
+public class ProductResponseCollection : IResult
+{
+    public IReadOnlyCollection<ProductResponse> Products { get; set; } = null!;
+}
+
 public class ProductMapper : Profile
 {
     public ProductMapper()
