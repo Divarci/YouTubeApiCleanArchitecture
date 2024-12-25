@@ -1,71 +1,73 @@
 ﻿namespace YouTubeApiCleanArchitecture.Domain.Abstraction;
-public class Result
+
+public class Result<TDto> where TDto : IResult
 {
-    internal Result(
-        int statusCode,
-        bool isNotSuccessfull,
-        Dictionary<string, string>? errors)
+    //Success
+    private Result(
+        TDto? data,
+        int statusCode)
     {
+        Data = data;
+        IsNotSuccessfull = false;
         StatusCode = statusCode;
-        IsNotSuccessfull = isNotSuccessfull;
+    }
+
+    //Success without data
+    private Result(int statusCode)
+    {
+        IsNotSuccessfull = false;
+        StatusCode = statusCode;
+    }
+
+    //Fail with one error
+    private Result(
+        int statusCode,
+        string errorCode,
+        string errorMessage)
+    {
+        IsNotSuccessfull = true;
+        StatusCode = statusCode;
+        Errors = new()
+        {
+            { errorCode, errorMessage } }
+        ;
+    }
+
+    //Fail with Many error
+    private Result(
+        int statusCode,
+        Dictionary<string, string> errors)
+    {
+        IsNotSuccessfull = true;
+        StatusCode = statusCode;
         Errors = errors;
     }
 
-    public int StatusCode { get; private set; }
 
-    public bool IsNotSuccessfull { get; private set; }
+    public TDto? Data { get; set; }
+    public bool IsNotSuccessfull { get; set; }
+    public int StatusCode { get; set; }
+    public Dictionary<string, string>? Errors { get; set; }
 
-    public Dictionary<string, string>? Errors { get; private set; }
 
+    public static Result<TDto> Success(
+        TDto data,
+        int statusCode)
+        => new(data, statusCode);
 
-    public static Result Failed(
+    public static Result<TDto> Success(int statusCode)
+        => new(statusCode);
+
+    public static Result<TDto> Failed(
         int statusCode,
         string errorCode,
-        string error)
-        => new(
-            statusCode: statusCode,
-            isNotSuccessfull: false,
-            errors: new Dictionary<string, string>
-             {
-                 {errorCode, error},
-             });
+        string errorMessage)
+        => new(statusCode, errorCode, errorMessage);
 
-    public Result Failed(
-        int statusCode,
-        string errorCode,
-        Dictionary<string, string> errors)
-        => new(
-            statusCode: statusCode,
-            isNotSuccessfull: false,
-            errors: errors);
-
-    public Result Success(int statusCode)
-        => new(
-            statusCode: statusCode,
-            isNotSuccessfull: false,
-            errors: null);
-
+    public static Result<TDto> Failed(
+       int statusCode,
+       Dictionary<string, string> errors)
+       => new(statusCode, errors);
 }
 
-public class Result<TEntity> : Result
-    where TEntity : BaseEntity
-{
-    internal Result(
-        TEntity data,
-        int statusCode,
-        bool isNotSuccessfull) : base(statusCode, isNotSuccessfull, null)
-    {
-        Data = data;
-    }
-
-    public TEntity Data { get; private set; }
-
-    public Result<TEntity> Success(
-       TEntity data,
-       int statusCode)
-       => new(
-           data: data,
-           statusCode: statusCode, 
-           isNotSuccessfull: false);
-}
-
+public class NoContentDto : IResult;

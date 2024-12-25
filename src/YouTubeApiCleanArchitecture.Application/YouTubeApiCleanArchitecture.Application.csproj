@@ -6,4 +6,32 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Abstraction\Emailing\" />
+    <Folder Include="Abstraction\Caching\" />
+    <Folder Include="Abstraction\Behaviours\" />
+    <Folder Include="Exceptions\" />
+    <Folder Include="Features\Customers\Commands\CreateProduct\" />
+    <Folder Include="Features\Customers\Commands\RemoveProduct\" />
+    <Folder Include="Features\Customers\Commands\UpdateProduct\" />
+    <Folder Include="Features\Customers\Queries\GetProduct\" />
+    <Folder Include="Features\Customers\Queries\GetAllProducts\" />
+    <Folder Include="Features\Invoices\Commands\CreateInvoice\" />
+    <Folder Include="Features\Invoices\Commands\RemoveInvoice\" />
+    <Folder Include="Features\Invoices\Commands\UpdateInvoice\" />
+    <Folder Include="Features\Invoices\Queries\GetAllInvoices\" />
+    <Folder Include="Features\Invoices\Queries\GetInvoice\" />
+    <Folder Include="Features\Products\Queries\GetAllProducts\" />
+    <Folder Include="Features\Products\Queries\GetProduct\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="MediatR" Version="12.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\YouTubeApiCleanArchitecture.Domain\YouTubeApiCleanArchitecture.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

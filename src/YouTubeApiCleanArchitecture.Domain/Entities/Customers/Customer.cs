@@ -29,16 +29,16 @@ public sealed class Customer : BaseEntity
 
     public ICollection<Invoice> Invoices { get; private set; } = null!;
 
-    public static Customer Create(CreateCustomerDto request)
+    public static Customer Create(CreateCustomerDto dto)
     {
         var customer = new Customer(
-            new Title(request.Title),
+            new Title(dto.Title),
             new Address(
-                request.FirstLineAddress, 
-                request.SecondLineLineAddress, 
-                request.Postcode,
-                request.City,
-                request.Country),
+                dto.FirstLineAddress,
+                dto.SecondLineLineAddress,
+                dto.Postcode,
+                dto.City,
+                dto.Country),
             new Money(0));
 
         customer.RaiseDomainEvent(
@@ -47,14 +47,14 @@ public sealed class Customer : BaseEntity
         return customer;
     }
 
-    public void Update(UpdateCustomerDto request)
+    public void Update(UpdateCustomerDto dto)
     {
-        Title = new Title(request.Title);
+        Title = new Title(dto.Title);
         Address = new Address(
-                request.FirstLineAddress,
-                request.SecondLineLineAddress,
-                request.Postcode,
-                request.City,
-                request.Country);
+                dto.FirstLineAddress,
+                dto.SecondLineLineAddress,
+                dto.Postcode,
+                dto.City,
+                dto.Country);
     }
 }

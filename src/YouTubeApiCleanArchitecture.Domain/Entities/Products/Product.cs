@@ -20,16 +20,16 @@ public sealed class Product : BaseEntity
 
     public Money UnitPrice { get; private set; } = null!;
 
-    public static Product Create(CreateProductDto request)
+    public static Product Create(CreateProductDto dto)
         => new (
             Guid.NewGuid(),
-            new Title(request.Description),
-            new Money(request.UnitPrice));
+            new Title(dto.Description),
+            new Money(dto.UnitPrice));
 
-    public void Update(UpdateProductDto request)
+    public void Update(UpdateProductDto dto)
     {
-        Description = new Title(request.Description);
-        UnitPrice = new Money(request.UnitPrice);
+        Description = new Title(dto.Description);
+        UnitPrice = new Money(dto.UnitPrice);
     }
 }
 

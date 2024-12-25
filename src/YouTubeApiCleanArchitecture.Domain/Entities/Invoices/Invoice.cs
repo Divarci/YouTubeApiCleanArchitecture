@@ -37,16 +37,16 @@ public sealed class Invoice : BaseEntity
 
 
     public static async Task<Invoice> Create(
-        CreateInvoiceDto request,
+        CreateInvoiceDto dto,
         IUnitOfWork unitOfWork)
     {
-        if (request.PurchasedProducts is null || request.PurchasedProducts.Count == 0)
+        if (dto.PurchasedProducts is null || dto.PurchasedProducts.Count == 0)
             throw new InvalidOperationException("Empty Invoice can not be created");
 
         var invoiceId = Guid.NewGuid();
         ICollection<InvoiceItem> purchasedProducts = [];
 
-        foreach (var purchasedProduct in request.PurchasedProducts)
+        foreach (var purchasedProduct in dto.PurchasedProducts)
         {
             var product = await unitOfWork
                 .Repository<Product>()
@@ -67,8 +67,8 @@ public sealed class Invoice : BaseEntity
 
         var invoice = new Invoice(
            invoiceId,
-           new PoNumber(request.PoNumber),
-           request.CustomerId,
+           new PoNumber(dto.PoNumber),
+           dto.CustomerId,
            purchasedProducts,
            new Money(totalBalance));
 
@@ -78,8 +78,8 @@ public sealed class Invoice : BaseEntity
         return invoice;
     }
 
-    public void Update(UpdateInvoiceDto request)
+    public void Update(UpdateInvoiceDto dto)
     {
-        PoNumber = new PoNumber(request.PoNumber);
+        PoNumber = new PoNumber(dto.PoNumber);
     }
 }
