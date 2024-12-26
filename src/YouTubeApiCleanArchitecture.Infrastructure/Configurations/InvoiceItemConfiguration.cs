@@ -31,5 +31,12 @@ public class InvoiceItemConfiguration : IEntityTypeConfiguration<InvoiceItem>
 
         builder.Property(x => x.RowVersion)
            .IsRowVersion();
+
+        builder.Property(item => item.Description)
+           .HasConversion(
+               description => description.Value,
+               value => new Title(value))
+           .IsRequired()
+           .HasMaxLength(45);
     }
 }

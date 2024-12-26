@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  youtubeapicleanarchitecture.api:
+    image: ${DOCKER_REGISTRY-}youtubeapicleanarchitectureapi
+    container_name: YouTube-Api
+    build:
+      context: .
+      dockerfile: src/YouTubeApiCleanArchitecture.API/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__Database=Server=youtubeapicleanarchitecture.sql;Database=YouTubeApi;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True;
+    depends_on:
+      - youtubeapicleanarchitecture.sql
+    networks:
+      - app-network 
+
+  youtubeapicleanarchitecture.sql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: YouTube-Sql
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=YourStrong!Passw0rd
+    ports:
+      - "1439:1433"
+    volumes:
+      - mssql-data:/var/opt/mssql 
+    networks:
+      - app-network
+
+volumes:
+  mssql-data:
+    
+networks:
+  app-network:
+    driver: bridge    

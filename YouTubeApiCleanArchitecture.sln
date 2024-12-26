@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35514.174 d17.12
+VisualStudioVersion = 17.12.35514.174
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{3E4A3527-8166-4105-BDFB-1E068D172666}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YouTubeApiCleanArchitecture.Infrastructure", "src\YouTubeApiCleanArchitecture.Infrastructure\YouTubeApiCleanArchitecture.Infrastructure.csproj", "{81859433-0A3A-4901-8B13-77C2DC16513A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YouTubeApiCleanArchitecture.API", "src\YouTubeApiCleanArchitecture.API\YouTubeApiCleanArchitecture.API.csproj", "{2D7E6D45-F649-463A-B653-CC23E1D7CF45}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{BC0E6265-0FE0-4CE4-8B72-839709492F5D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +39,10 @@ Global
 		{2D7E6D45-F649-463A-B653-CC23E1D7CF45}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D7E6D45-F649-463A-B653-CC23E1D7CF45}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D7E6D45-F649-463A-B653-CC23E1D7CF45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC0E6265-0FE0-4CE4-8B72-839709492F5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC0E6265-0FE0-4CE4-8B72-839709492F5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC0E6265-0FE0-4CE4-8B72-839709492F5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC0E6265-0FE0-4CE4-8B72-839709492F5D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
