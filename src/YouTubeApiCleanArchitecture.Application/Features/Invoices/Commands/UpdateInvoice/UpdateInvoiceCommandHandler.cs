@@ -13,11 +13,11 @@ internal sealed class UpdateInvoiceCommandHandler(
         CancellationToken cancellationToken)
     {
         var invoice = await _unitOfWork.Repository<Invoice>()
-            .GetByIdAsync(request.Dto.InvoiceId, cancellationToken);
+            .GetByIdAsync(request.InvoiceId, cancellationToken);
 
         if (invoice is null)
             return Result<NoContentDto>
-                .Failed(400, "Null.Error", $"The invoice with the id: {request.Dto.InvoiceId} not exist");
+                .Failed(400, "Null.Error", $"The invoice with the id: {request.InvoiceId} not exist");
 
         invoice.Update(request.Dto);
 

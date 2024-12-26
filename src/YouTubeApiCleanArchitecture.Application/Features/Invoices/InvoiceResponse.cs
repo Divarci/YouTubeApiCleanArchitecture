@@ -12,9 +12,9 @@ public class InvoiceResponse : IResult
 
     public CustomerResponse Customer { get; set; } = null!;
 
-    public decimal InvoiceBalance { get; set; }
-
     public ICollection<InvoiceItemResponse> PurchasedProducts { get; set; } = null!;
+
+    public decimal InvoiceBalance { get; set; }
 
 }
 
@@ -30,6 +30,6 @@ public class InvoiceMapper : Profile
         CreateMap<Invoice, InvoiceResponse>()
             .ForMember(dto => dto.PoNumber, opt => opt.MapFrom(ent => ent.PoNumber.Value))
             .ForMember(dto => dto.Customer, opt => opt.MapFrom(ent => ent.Customer))
-            .ForMember(dto => dto.InvoiceBalance, opt => opt.MapFrom(ent => ent.TotalBalance));
+            .ForMember(dto => dto.InvoiceBalance, opt => opt.MapFrom(ent => ent.TotalBalance.Value));
     }
 }

@@ -65,7 +65,7 @@ public class CustomersController(
     }
 
     [HttpDelete("{customerId}")]
-    public async Task<IActionResult> UpdateCustomerAsync(
+    public async Task<IActionResult> RemoveCustomerAsync(
        Guid customerId,
        CancellationToken cancellationToken = default)
     {

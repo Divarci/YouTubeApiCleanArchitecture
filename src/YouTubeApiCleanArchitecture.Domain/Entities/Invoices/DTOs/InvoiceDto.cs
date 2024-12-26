@@ -13,7 +13,4 @@ public class CreateInvoiceDto : BaseInvoiceDto
     public ICollection<CreateInvoiceItemDto> PurchasedProducts { get; set; } = null!;
 }
 
-public class UpdateInvoiceDto : BaseInvoiceDto
-{
-    public Guid InvoiceId { get; set; }
-}
+public class UpdateInvoiceDto : BaseInvoiceDto;

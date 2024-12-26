@@ -13,11 +13,11 @@ internal sealed class UpdateProductCommandHandler(
         CancellationToken cancellationToken)
     {
         var product = await _unitOfWork.Repository<Product>()
-            .GetByIdAsync(request.Dto.ProductId, cancellationToken);
+            .GetByIdAsync(request.ProductId, cancellationToken);
 
         if (product is null)
             return Result<NoContentDto>
-                .Failed(400, "Null.Error", $"The product with the id: {request.Dto.ProductId} not exist");
+                .Failed(400, "Null.Error", $"The product with the id: {request.ProductId} not exist");
 
         product.Update(request.Dto);
 

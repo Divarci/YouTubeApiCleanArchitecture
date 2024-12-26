@@ -7,9 +7,6 @@ public abstract class BaseProductDto
 
 public class CreateProductDto : BaseProductDto;
 
-public class UpdateProductDto : BaseProductDto
-{
-    public Guid ProductId { get; set; }
-}
+public class UpdateProductDto : BaseProductDto;
 
 
