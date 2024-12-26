@@ -16,8 +16,9 @@ internal sealed class InvoiceCreatedDomainEventHandler(
     {
         var invoice = await _unitOfWork.Repository<Invoice>()
             .GetAll()
+            .AsTracking()
             .Include(x=>x.Customer)
-            .FirstOrDefaultAsync(x=>x.Id == notification.InvoiceId);
+            .FirstOrDefaultAsync(x=>x.Id == notification.InvoiceId, cancellationToken);
 
         if (invoice is null)
             return; // Search
