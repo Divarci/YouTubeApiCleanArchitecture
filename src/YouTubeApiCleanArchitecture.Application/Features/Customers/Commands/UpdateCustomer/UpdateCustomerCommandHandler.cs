@@ -13,11 +13,11 @@ internal sealed class UpdateCustomerCommandHandler(
         CancellationToken cancellationToken)
     {
         var customer = await _unitOfWork.Repository<Customer>()
-            .GetByIdAsync(request.Dto.CustomerId, cancellationToken);
+            .GetByIdAsync(request.CustomerId, cancellationToken);
 
         if (customer is null)
             return Result<NoContentDto>
-                .Failed(400, "Null.Error", $"The customer with the id: {request.Dto.CustomerId} not exist");
+                .Failed(400, "Null.Error", $"The customer with the id: {request.CustomerId} not exist");
 
         customer.Update(request.Dto);
 

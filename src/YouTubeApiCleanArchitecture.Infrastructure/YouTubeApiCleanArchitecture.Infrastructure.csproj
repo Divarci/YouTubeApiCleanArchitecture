@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\YouTubeApiCleanArchitecture.Application\YouTubeApiCleanArchitecture.Application.csproj" />
     <ProjectReference Include="..\YouTubeApiCleanArchitecture.Domain\YouTubeApiCleanArchitecture.Domain.csproj" />
   </ItemGroup>
 

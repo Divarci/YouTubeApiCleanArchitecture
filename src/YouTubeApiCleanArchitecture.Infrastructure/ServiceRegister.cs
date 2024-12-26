@@ -1,8 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using YouTubeApiCleanArchitecture.Application.Abstraction.Emailing;
 using YouTubeApiCleanArchitecture.Domain.Abstraction;
 using YouTubeApiCleanArchitecture.Infrastructure.Repositories;
+using YouTubeApiCleanArchitecture.Infrastructure.Services.Emailing;
 using YouTubeApiCleanArchitecture.Infrastructure.UnitOfWorks;
 
 namespace YouTubeApiCleanArchitecture.Infrastructure;
@@ -36,6 +38,8 @@ public static class ServiceRegister
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+        services.AddScoped<IEmailService,EmailService>();
 
         return services;
     }

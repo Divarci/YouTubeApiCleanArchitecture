@@ -1,4 +1,6 @@
-﻿namespace YouTubeApiCleanArchitecture.Domain.Abstraction;
+﻿using System.Text.Json.Serialization;
+
+namespace YouTubeApiCleanArchitecture.Domain.Abstraction;
 
 public class Result<TDto> where TDto : IResult
 {
@@ -45,8 +47,12 @@ public class Result<TDto> where TDto : IResult
 
 
     public TDto? Data { get; set; }
+
+    [JsonIgnore]
     public bool IsNotSuccessfull { get; set; }
+
     public int StatusCode { get; set; }
+
     public Dictionary<string, string>? Errors { get; set; }
 
 
