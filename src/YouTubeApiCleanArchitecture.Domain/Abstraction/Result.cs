@@ -31,14 +31,15 @@ public class Result<TDto> where TDto : IResult
         StatusCode = statusCode;
         Errors = new()
         {
-            { errorCode, errorMessage } }
-        ;
+            ErrorCode = errorCode,
+            ErrorMessages = [errorMessage]
+        };
     }
 
     //Fail with Many error
     private Result(
         int statusCode,
-        Dictionary<string, string> errors)
+        Error errors)
     {
         IsNotSuccessfull = true;
         StatusCode = statusCode;
@@ -53,7 +54,7 @@ public class Result<TDto> where TDto : IResult
 
     public int StatusCode { get; set; }
 
-    public Dictionary<string, string>? Errors { get; set; }
+    public Error? Errors { get; set; }
 
 
     public static Result<TDto> Success(
@@ -72,8 +73,14 @@ public class Result<TDto> where TDto : IResult
 
     public static Result<TDto> Failed(
        int statusCode,
-       Dictionary<string, string> errors)
+       Error errors)
        => new(statusCode, errors);
+}
+
+public class Error
+{
+    public string ErrorCode { get; set; } = null!;
+    public List<string> ErrorMessages { get; set; } =null!;
 }
 
 public class NoContentDto : IResult;
