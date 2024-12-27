@@ -6,7 +6,7 @@ public class BadRequestException(
 {
     public Error Errors { get; set; } = new()
     {
-        ErrorCode = "Validation.Error",
+        ErrorCode = "BadRequest.Error",
         ErrorMessages = errors
     };
 }

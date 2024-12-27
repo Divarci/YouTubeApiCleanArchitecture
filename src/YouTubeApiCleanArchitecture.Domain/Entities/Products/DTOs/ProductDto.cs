@@ -1,7 +1,13 @@
-﻿namespace YouTubeApiCleanArchitecture.Domain.Entities.Products.DTOs;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace YouTubeApiCleanArchitecture.Domain.Entities.Products.DTOs;
 public abstract class BaseProductDto
 {
+    [Required]
+    [MaxLength(45)]
     public string Description { get; set; } = null!;
+
+    [Required]
     public decimal UnitPrice { get; set; }
 }
 

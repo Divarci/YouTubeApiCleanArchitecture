@@ -62,7 +62,7 @@ public class GlobalExceptionHandlingMiddleware(
                     new Error
                     {
                         ErrorCode = "Internal Server Error",
-                        ErrorMessages = ["Please see an advise"]
+                        ErrorMessages = ["Please seek an advise"]
                     })
         };
 }

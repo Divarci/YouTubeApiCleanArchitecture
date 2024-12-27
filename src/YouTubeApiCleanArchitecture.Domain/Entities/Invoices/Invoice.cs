@@ -41,9 +41,21 @@ public sealed class Invoice : BaseEntity
         CreateInvoiceDto dto,
         IUnitOfWork unitOfWork)
     {
+        if(dto.CustomerId == Guid.Empty)
+            throw new BadRequestException(
+                ["Customer Id is required"]);
+
         if (dto.PurchasedProducts is null || dto.PurchasedProducts.Count == 0)
             throw new BadRequestException(
                 ["Empty Invoice can not be created"]);
+
+        if( dto.PurchasedProducts.Any(x=>x.ProductId == Guid.Empty))
+            throw new BadRequestException(
+                ["Product Id(s) is/are missing in your purchased product list"]);
+
+        if (dto.PurchasedProducts.Any(x => x.Quantity <= 0))
+            throw new BadRequestException(
+                ["Product Quantity must be set and must be positive number in your purchased product list"]);
 
         var invoiceId = Guid.NewGuid();
         ICollection<InvoiceItem> purchasedProducts = [];
