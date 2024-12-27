@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Serilog.Context;
+using System.ComponentModel.DataAnnotations;
 using YouTubeApiCleanArchitecture.Domain.Abstraction;
 using YouTubeApiCleanArchitecture.Domain.Exceptions;
 
@@ -18,10 +19,14 @@ public class GlobalExceptionHandlingMiddleware(
             await _next(context);
         }
         catch (Exception exception)
-        {
-            _logger.LogError(exception, "Exception occured: {Message}", exception.Message);
+        {           
 
             var exceptionDetails = GetExceptionDetails(exception);
+
+            using (LogContext.PushProperty("Error", exceptionDetails.Errors!.ErrorMessages, true))
+            {
+                _logger.LogError(exception, "Exception occured: {Message}", exception.Message);
+            }
 
             context.Response.StatusCode = exceptionDetails.StatusCode;
 

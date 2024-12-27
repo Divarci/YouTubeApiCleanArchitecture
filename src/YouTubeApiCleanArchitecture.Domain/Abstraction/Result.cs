@@ -2,7 +2,7 @@
 
 namespace YouTubeApiCleanArchitecture.Domain.Abstraction;
 
-public class Result<TDto> where TDto : IResult
+public class Result<TDto> : ILoggable where TDto : IResult
 {
     //Success
     private Result(

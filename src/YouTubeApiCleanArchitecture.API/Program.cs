@@ -1,10 +1,14 @@
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 using YouTubeApiCleanArchitecture.API.Extensions;
 using YouTubeApiCleanArchitecture.API.Filters;
 using YouTubeApiCleanArchitecture.Application;
 using YouTubeApiCleanArchitecture.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog((context, configuration) =>
+    configuration.ReadFrom.Configuration(context.Configuration));
 
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddApplicationServices();
@@ -31,6 +35,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseRequestContextLogging();
+app.UseSerilogRequestLogging(); 
 
 app.UseCustomExceptionHandler();
 

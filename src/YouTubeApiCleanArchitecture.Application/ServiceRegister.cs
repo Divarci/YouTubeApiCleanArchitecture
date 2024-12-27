@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using YouTubeApiCleanArchitecture.Application.Abstraction.Behaviours;
 using YouTubeApiCleanArchitecture.Application.Abstraction.Emailing;
 using YouTubeApiCleanArchitecture.Domain.Abstraction;
 
@@ -23,6 +24,8 @@ public static class ServiceRegister
         services.AddMediatR(config =>
         {
             config.RegisterServicesFromAssembly(applicationAssembly);
+
+            config.AddOpenBehavior(typeof(LoggingBehavior<,>));
         });
 
         return services;

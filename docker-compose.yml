@@ -30,6 +30,17 @@ services:
     networks:
       - app-network
 
+  youtubeapicleanarchitecture.serilog:
+    image: datalust/seq:latest
+    container_name: YouTube-Serilog
+    environment:
+      - ACCEPT_EULA=Y
+    ports:
+      - 5341:5341
+      - 9090:80    
+    networks:
+      - app-network
+
 volumes:
   mssql-data:
     
