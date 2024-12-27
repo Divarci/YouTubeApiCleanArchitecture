@@ -24,7 +24,9 @@ internal sealed class UpdateCustomerCommandHandler(
         _unitOfWork.Repository<Customer>()
             .Update(customer);
 
-        await _unitOfWork.CommitAsync(cancellationToken);
+        await _unitOfWork.CommitAsync(
+            cancellationToken, 
+            checkForConcurrency: true);
 
         return Result<NoContentDto>
             .Success(204);

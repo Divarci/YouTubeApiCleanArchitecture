@@ -7,6 +7,7 @@ using YouTubeApiCleanArchitecture.Domain.Entities.Shared;
 using YouTubeApiCleanArchitecture.Domain.Entities.Invoices.ValueObjects;
 using YouTubeApiCleanArchitecture.Domain.Entities.Invoices.DTOs;
 using YouTubeApiCleanArchitecture.Domain.Entities.Invoices.Events;
+using YouTubeApiCleanArchitecture.Domain.Exceptions;
 
 namespace YouTubeApiCleanArchitecture.Domain.Entities.Invoices;
 public sealed class Invoice : BaseEntity
@@ -41,7 +42,8 @@ public sealed class Invoice : BaseEntity
         IUnitOfWork unitOfWork)
     {
         if (dto.PurchasedProducts is null || dto.PurchasedProducts.Count == 0)
-            throw new InvalidOperationException("Empty Invoice can not be created");
+            throw new BadRequestException(
+                ["Empty Invoice can not be created"]);
 
         var invoiceId = Guid.NewGuid();
         ICollection<InvoiceItem> purchasedProducts = [];
@@ -51,7 +53,8 @@ public sealed class Invoice : BaseEntity
             var product = await unitOfWork
                 .Repository<Product>()
                 .GetByIdAsync(purchasedProduct.ProductId) ??
-                throw new ArgumentNullException($"Product with id: {purchasedProduct.ProductId} not found");
+                throw new NullObjectException(
+                    [$"Product with id: {purchasedProduct.ProductId} not found"]);
 
             var invoiceItem = new InvoiceItem(
                 Guid.NewGuid(),

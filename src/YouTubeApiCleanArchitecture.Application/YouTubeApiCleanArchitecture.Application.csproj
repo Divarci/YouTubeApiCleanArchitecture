@@ -7,9 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Exceptions\**" />
+    <EmbeddedResource Remove="Exceptions\**" />
+    <None Remove="Exceptions\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Abstraction\Caching\" />
     <Folder Include="Abstraction\Behaviours\" />
-    <Folder Include="Exceptions\" />
   </ItemGroup>
 
   <ItemGroup>

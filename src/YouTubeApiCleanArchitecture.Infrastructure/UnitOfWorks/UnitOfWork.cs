@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using YouTubeApiCleanArchitecture.Domain.Abstraction;
+using YouTubeApiCleanArchitecture.Domain.Exceptions;
 using YouTubeApiCleanArchitecture.Infrastructure.Repositories;
 
 namespace YouTubeApiCleanArchitecture.Infrastructure.UnitOfWorks;
@@ -8,7 +9,7 @@ public class UnitOfWork(
 {
     private readonly AppDbContext _context = context;
 
-    public async Task<string> CommitAsync(
+    public async Task CommitAsync(
         CancellationToken cancellationToken = default, 
         bool checkForConcurrency = false)
     {
@@ -18,10 +19,9 @@ public class UnitOfWork(
         }
         catch (DbUpdateConcurrencyException) when (checkForConcurrency)
         {
-            return "A concurrency conflict occurred while saving changes";
+            throw new ConcurrencyException(
+                ["A concurrency conflict occurred while saving changes"]);
         }
-
-        return string.Empty;
     }
 
     public IGenericRepository<TEntity> Repository<TEntity>() 

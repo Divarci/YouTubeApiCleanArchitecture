@@ -1,7 +1,7 @@
 ﻿namespace YouTubeApiCleanArchitecture.Domain.Abstraction;
 public interface IUnitOfWork
 {
-    Task<string> CommitAsync(
+    Task CommitAsync(
      CancellationToken cancellationToken = default,
      bool checkForConcurrency = false);
 

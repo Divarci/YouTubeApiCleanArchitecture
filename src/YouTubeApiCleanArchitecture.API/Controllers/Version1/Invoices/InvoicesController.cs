@@ -5,14 +5,7 @@ using YouTubeApiCleanArchitecture.Application.Features.Invoices.Commands.RemoveI
 using YouTubeApiCleanArchitecture.Application.Features.Invoices.Commands.UpdateInvoice;
 using YouTubeApiCleanArchitecture.Application.Features.Invoices.Queries.GetAllInvoices;
 using YouTubeApiCleanArchitecture.Application.Features.Invoices.Queries.GetInvoice;
-using YouTubeApiCleanArchitecture.Application.Features.Products.Commands.CreateProduct;
-using YouTubeApiCleanArchitecture.Application.Features.Products.Commands.RemoveProduct;
-using YouTubeApiCleanArchitecture.Application.Features.Products.Commands.UpdateProduct;
-using YouTubeApiCleanArchitecture.Application.Features.Products.Queries.GetAllProducts;
-using YouTubeApiCleanArchitecture.Application.Features.Products.Queries.GetProduct;
-using YouTubeApiCleanArchitecture.Domain.Entities.Invoices;
 using YouTubeApiCleanArchitecture.Domain.Entities.Invoices.DTOs;
-using YouTubeApiCleanArchitecture.Domain.Entities.Products.DTOs;
 
 namespace YouTubeApiCleanArchitecture.API.Controllers.Version1.Invoices;
 [Route("api/[controller]")]

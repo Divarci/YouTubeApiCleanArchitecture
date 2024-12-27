@@ -24,7 +24,9 @@ internal sealed class UpdateInvoiceCommandHandler(
         _unitOfWork.Repository<Invoice>()
             .Update(invoice);
 
-        await _unitOfWork.CommitAsync(cancellationToken);
+        await _unitOfWork.CommitAsync(
+            cancellationToken,
+            checkForConcurrency: true);
 
         return Result<NoContentDto>
             .Success(204);

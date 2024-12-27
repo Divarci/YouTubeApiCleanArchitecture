@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Mvc;
+using YouTubeApiCleanArchitecture.API.Extensions;
 using YouTubeApiCleanArchitecture.Application;
 using YouTubeApiCleanArchitecture.Infrastructure;
 
@@ -19,6 +21,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCustomExceptionHandler();
 
 app.UseAuthorization();
 
