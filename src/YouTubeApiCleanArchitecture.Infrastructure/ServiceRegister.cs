@@ -22,6 +22,8 @@ public static class ServiceRegister
 
         AddCaching(services, config);
 
+        AddHealthChecks(services, config);
+
         return services;
     }
 
@@ -43,7 +45,7 @@ public static class ServiceRegister
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-        services.AddScoped<IEmailService,EmailService>();
+        services.AddScoped<IEmailService, EmailService>();
 
         return services;
     }
@@ -56,6 +58,17 @@ public static class ServiceRegister
             => opt.Configuration = config.GetConnectionString("Cache"));
 
         services.AddSingleton<ICacheService, CacheService>();
+
+        return services;
+    }
+
+    private static IServiceCollection AddHealthChecks(
+      this IServiceCollection services,
+      IConfiguration config)
+    {
+        services.AddHealthChecks()
+            .AddSqlServer(config.GetConnectionString("Database")!)
+            .AddRedis(config.GetConnectionString("Cache")!);
 
         return services;
     }
