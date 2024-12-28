@@ -9,11 +9,11 @@ public class CustomerResponse : IResult
 {
     public Guid Id { get; set; }
 
-    public string Title { get; private set; } = null!;
+    public string Title { get; set; } = null!;
 
-    public Address Address { get; private set; } = null!;
+    public Address Address { get; set; } = null!;
 
-    public decimal Balance { get; private set; }
+    public decimal Balance { get; set; }
 }
 
 public class CustomerResponseCollection : IResult

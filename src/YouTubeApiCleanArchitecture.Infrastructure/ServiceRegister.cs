@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using YouTubeApiCleanArchitecture.Application.Abstraction.Caching;
 using YouTubeApiCleanArchitecture.Application.Abstraction.Emailing;
 using YouTubeApiCleanArchitecture.Domain.Abstraction;
 using YouTubeApiCleanArchitecture.Infrastructure.Repositories;
+using YouTubeApiCleanArchitecture.Infrastructure.Services.Caching;
 using YouTubeApiCleanArchitecture.Infrastructure.Services.Emailing;
 using YouTubeApiCleanArchitecture.Infrastructure.UnitOfWorks;
 
@@ -17,6 +19,8 @@ public static class ServiceRegister
         AddDbConnection(services, config);
 
         AddServicesToDiContainer(services);
+
+        AddCaching(services, config);
 
         return services;
     }
@@ -40,6 +44,18 @@ public static class ServiceRegister
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         services.AddScoped<IEmailService,EmailService>();
+
+        return services;
+    }
+
+    private static IServiceCollection AddCaching(
+       this IServiceCollection services,
+       IConfiguration config)
+    {
+        services.AddStackExchangeRedisCache(opt
+            => opt.Configuration = config.GetConnectionString("Cache"));
+
+        services.AddSingleton<ICacheService, CacheService>();
 
         return services;
     }

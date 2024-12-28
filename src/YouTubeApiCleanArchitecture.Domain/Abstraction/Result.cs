@@ -46,6 +46,7 @@ public class Result<TDto> : ILoggable where TDto : IResult
         Errors = errors;
     }
 
+    public Result() { }
 
     public TDto? Data { get; set; }
 
@@ -80,7 +81,7 @@ public class Result<TDto> : ILoggable where TDto : IResult
 public class Error
 {
     public string ErrorCode { get; set; } = null!;
-    public List<string> ErrorMessages { get; set; } =null!;
+    public List<string> ErrorMessages { get; set; } = null!;
 }
 
 public class NoContentDto : IResult;

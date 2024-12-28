@@ -28,6 +28,6 @@ internal sealed class GetAllCustomersQueryHandler(
         };
 
         return Result<CustomerResponseCollection>
-            .Failed(200,"Test.Error","Initial test");
+            .Success(response,200);
     }
 }
