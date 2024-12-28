@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Asp.Versioning;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using YouTubeApiCleanArchitecture.Application.Abstraction.Caching;
@@ -23,6 +24,8 @@ public static class ServiceRegister
         AddCaching(services, config);
 
         AddHealthChecks(services, config);
+
+        AddApiVersioning(services);
 
         return services;
     }
@@ -69,6 +72,26 @@ public static class ServiceRegister
         services.AddHealthChecks()
             .AddSqlServer(config.GetConnectionString("Database")!)
             .AddRedis(config.GetConnectionString("Cache")!);
+
+        return services;
+    }
+
+    private static IServiceCollection AddApiVersioning(
+     this IServiceCollection services)
+    {
+        services
+            .AddApiVersioning(opt =>
+            {
+                opt.DefaultApiVersion = new ApiVersion(1);
+                opt.ReportApiVersions = true;
+                opt.ApiVersionReader = new UrlSegmentApiVersionReader();
+            })
+            .AddMvc()
+            .AddApiExplorer(opt =>
+            {
+                opt.GroupNameFormat = "'v'V";
+                opt.SubstituteApiVersionInUrl = true;
+            });
 
         return services;
     }

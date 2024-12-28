@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Asp.Versioning;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using YouTubeApiCleanArchitecture.Application.Features.Invoices.Commands.CreateInvoice;
 using YouTubeApiCleanArchitecture.Application.Features.Invoices.Commands.RemoveInvoice;
@@ -8,8 +9,9 @@ using YouTubeApiCleanArchitecture.Application.Features.Invoices.Queries.GetInvoi
 using YouTubeApiCleanArchitecture.Domain.Entities.Invoices.DTOs;
 
 namespace YouTubeApiCleanArchitecture.API.Controllers.Version1.Invoices;
-[Route("api/[controller]")]
-[ApiController]
+
+[ApiVersion(ApiVersions.V2)]
+[Route("api/v{version:apiVersion}/[controller]")]
 public class InvoicesController(ISender sender) : BaseController
 {
     private readonly ISender _sender = sender;

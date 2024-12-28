@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Asp.Versioning;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using YouTubeApiCleanArchitecture.Application.Features.Customers.Commands.CreateCustomer;
 using YouTubeApiCleanArchitecture.Application.Features.Customers.Commands.RemoveCustomer;
@@ -9,7 +10,8 @@ using YouTubeApiCleanArchitecture.Domain.Entities.Customers.DTOs;
 
 namespace YouTubeApiCleanArchitecture.API.Controllers.Version1.Customers;
 
-[Route("api/[controller]")]
+[ApiVersion(ApiVersions.V1)]
+[Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
 public class CustomersController(
     ISender sender) : BaseController
@@ -49,7 +51,7 @@ public class CustomersController(
             cancellationToken);
 
         return CreateResult(response);
-    }
+    }   
 
     [HttpPut("{customerId}")]
     public async Task<IActionResult> UpdateCustomerAsync(

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using YouTubeApiCleanArchitecture.API.Extensions;
 using YouTubeApiCleanArchitecture.API.Filters;
+using YouTubeApiCleanArchitecture.API.OpenApi;
 using YouTubeApiCleanArchitecture.Application;
 using YouTubeApiCleanArchitecture.Infrastructure;
 
@@ -28,12 +29,26 @@ builder.Services.Configure<ApiBehaviorOptions>(opt =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.ConfigureOptions<ConfigureSwaggerOptions>();
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        var descriptions = app.DescribeApiVersions();
+
+        foreach (var description in descriptions)
+        {
+            var url = $"/swagger/{description.GroupName}/swagger.json";
+            var name = description.GroupName.ToUpperInvariant();
+            options.SwaggerEndpoint(url, name);
+        }
+    });
+
+
 }
 
 app.UseHttpsRedirection();

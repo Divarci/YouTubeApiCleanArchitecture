@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Asp.Versioning;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using YouTubeApiCleanArchitecture.Application.Features.Products.Commands.CreateProduct;
 using YouTubeApiCleanArchitecture.Application.Features.Products.Commands.RemoveProduct;
@@ -9,8 +10,8 @@ using YouTubeApiCleanArchitecture.Domain.Entities.Products.DTOs;
 
 namespace YouTubeApiCleanArchitecture.API.Controllers.Version1.Products;
 
-[Route("api/[controller]")]
-[ApiController]
+[ApiVersion(ApiVersions.V1)]
+[Route("api/v{version:apiVersion}/[controller]")]
 public class ProductsController(
     ISender sender) : BaseController
 {
