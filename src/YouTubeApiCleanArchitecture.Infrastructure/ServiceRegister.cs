@@ -2,9 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Quartz;
 using YouTubeApiCleanArchitecture.Application.Abstraction.Caching;
 using YouTubeApiCleanArchitecture.Application.Abstraction.Emailing;
 using YouTubeApiCleanArchitecture.Domain.Abstraction;
+using YouTubeApiCleanArchitecture.Infrastructure.Outbox;
 using YouTubeApiCleanArchitecture.Infrastructure.Repositories;
 using YouTubeApiCleanArchitecture.Infrastructure.Services.Caching;
 using YouTubeApiCleanArchitecture.Infrastructure.Services.Emailing;
@@ -26,6 +28,8 @@ public static class ServiceRegister
         AddHealthChecks(services, config);
 
         AddApiVersioning(services);
+
+        AddBackgroundJobs(services, config);
 
         return services;
     }
@@ -92,6 +96,21 @@ public static class ServiceRegister
                 opt.GroupNameFormat = "'v'V";
                 opt.SubstituteApiVersionInUrl = true;
             });
+
+        return services;
+    }
+
+    private static IServiceCollection AddBackgroundJobs(
+        this IServiceCollection services,
+        IConfiguration config)
+    {
+        services.Configure<OutboxOptions>(config.GetSection("Outbox"));
+
+        services.AddQuartz();
+
+        services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
+
+        services.ConfigureOptions<ProcessOutboxMessagesJobsSetup>();
 
         return services;
     }

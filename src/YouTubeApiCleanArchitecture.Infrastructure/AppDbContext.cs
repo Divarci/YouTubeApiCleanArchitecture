@@ -1,27 +1,29 @@
-﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using YouTubeApiCleanArchitecture.Domain.Abstraction;
 using YouTubeApiCleanArchitecture.Domain.Entities.Customers;
 using YouTubeApiCleanArchitecture.Domain.Entities.InvoiceItems;
 using YouTubeApiCleanArchitecture.Domain.Entities.Invoices;
 using YouTubeApiCleanArchitecture.Domain.Entities.Products;
+using YouTubeApiCleanArchitecture.Infrastructure.Outbox;
 
 namespace YouTubeApiCleanArchitecture.Infrastructure;
 public class AppDbContext : DbContext
 {
-    private readonly IPublisher _publisher;
+
+    private static readonly JsonSerializerSettings JsonSerializerSettings = new()
+    {
+        TypeNameHandling = TypeNameHandling.All,
+    };
 
     public AppDbContext(
-        DbContextOptions options,
-        IPublisher publisher) : base(options)
-    {
-        _publisher = publisher;
-    }
+        DbContextOptions options) : base(options) { }
 
     public DbSet<Customer> Customers { get; set; } = null!;
     public DbSet<Product> Products { get; set; } = null!;
     public DbSet<Invoice> Invoices { get; set; } = null!;
     public DbSet<InvoiceItem> InvoiceItems { get; set; } = null!;
+    public DbSet<OutboxMessage> OutboxMessages { get; set; } = null!;
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -33,18 +35,18 @@ public class AppDbContext : DbContext
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        var result = await base.SaveChangesAsync(cancellationToken);
+        AddDomainEventsAsOutboxMessages();
 
-        await PublishDomainEvents();
+        var result = await base.SaveChangesAsync(cancellationToken);
 
         return result;
     }
 
-    private async Task PublishDomainEvents()
+    private void AddDomainEventsAsOutboxMessages()
     {
-        var domainEvents = ChangeTracker
+        var outboxMessages = ChangeTracker
             .Entries<BaseEntity>()
-            .Select(entry => entry.Entity)  
+            .Select(entry => entry.Entity)
             .SelectMany(entity =>
             {
                 var domainEvents = entity.GetDomainEvents();
@@ -53,11 +55,14 @@ public class AppDbContext : DbContext
 
                 return domainEvents;
             })
+            .Select(domainEvent => new OutboxMessage(
+                Guid.NewGuid(),
+                DateTime.UtcNow,
+                domainEvent.GetType().Name,
+                JsonConvert.SerializeObject(domainEvent, JsonSerializerSettings)))
             .ToList();
 
-        foreach (var domainEvent in domainEvents)
-        {
-            await _publisher.Publish(domainEvent);
-        }
+        AddRange(outboxMessages);
+
     }
 }

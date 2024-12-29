@@ -10,7 +10,7 @@ using YouTubeApiCleanArchitecture.Domain.Entities.Invoices.DTOs;
 
 namespace YouTubeApiCleanArchitecture.API.Controllers.Version1.Invoices;
 
-[ApiVersion(ApiVersions.V2)]
+[ApiVersion(ApiVersions.V1)]
 [Route("api/v{version:apiVersion}/[controller]")]
 public class InvoicesController(ISender sender) : BaseController
 {

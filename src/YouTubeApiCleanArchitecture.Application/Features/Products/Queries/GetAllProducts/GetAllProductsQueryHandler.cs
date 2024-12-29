@@ -29,10 +29,6 @@ internal sealed class GetAllProductsQueryHandler(
         };
 
         return Result<ProductResponseCollection>
-            .Failed(400, new Error
-            {
-                ErrorCode = "Test.Error",
-                ErrorMessages = ["Test One", "test Two"]
-            });
+            .Success(response, 200);
     }
 }
