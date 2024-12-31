@@ -1,16 +1,21 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using System.Reflection;
 using YouTubeApiCleanArchitecture.Domain.Abstraction;
+using YouTubeApiCleanArchitecture.Domain.Attributes;
 using YouTubeApiCleanArchitecture.Domain.Entities.Customers;
+using YouTubeApiCleanArchitecture.Domain.Entities.Identity.Roles;
+using YouTubeApiCleanArchitecture.Domain.Entities.Identity.Users;
 using YouTubeApiCleanArchitecture.Domain.Entities.InvoiceItems;
 using YouTubeApiCleanArchitecture.Domain.Entities.Invoices;
 using YouTubeApiCleanArchitecture.Domain.Entities.Products;
+using YouTubeApiCleanArchitecture.Domain.Exceptions;
 using YouTubeApiCleanArchitecture.Infrastructure.Outbox;
 
 namespace YouTubeApiCleanArchitecture.Infrastructure;
-public class AppDbContext : DbContext
+public class AppDbContext : IdentityDbContext<AppUser,AppRole,Guid>
 {
-
     private static readonly JsonSerializerSettings JsonSerializerSettings = new()
     {
         TypeNameHandling = TypeNameHandling.All,
@@ -30,6 +35,8 @@ public class AppDbContext : DbContext
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
 
+        ProcessAutoseedData(modelBuilder);
+
         base.OnModelCreating(modelBuilder);
     }
 
@@ -45,7 +52,7 @@ public class AppDbContext : DbContext
     private void AddDomainEventsAsOutboxMessages()
     {
         var outboxMessages = ChangeTracker
-            .Entries<BaseEntity>()
+            .Entries<IDomainEventRaiser>()
             .Select(entry => entry.Entity)
             .SelectMany(entity =>
             {
@@ -63,6 +70,30 @@ public class AppDbContext : DbContext
             .ToList();
 
         AddRange(outboxMessages);
+    }
 
+    private void ProcessAutoseedData(ModelBuilder modelBuilder)
+    {
+        var entityTypes = modelBuilder.Model.GetEntityTypes()
+            .Select(x => x.ClrType)
+            .Where(x => x.GetInterface(nameof(IHaveAutoseedData)) != null)
+            .SelectMany(e => e.GetProperties())
+            .Where(e => e.GetCustomAttribute<AutoSeedDataAttribute>() != null)
+            .GroupBy(e => e.DeclaringType)
+            .ToList();
+
+        foreach (var group in entityTypes)
+        {
+            var entityType = modelBuilder.Entity(group.Key!);
+
+            foreach (var property in group)
+            {
+                var value = property.GetValue(Activator.CreateInstance(property.DeclaringType!));
+
+                entityType.HasData(value ?? throw new InternalServerException(
+                    "AutoseedFailure.Error",
+                    ["PropertyInfo value null error"]));
+            }
+        }
     }
 }

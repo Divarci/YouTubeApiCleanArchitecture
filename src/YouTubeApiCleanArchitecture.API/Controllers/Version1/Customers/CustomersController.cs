@@ -1,5 +1,6 @@
 ﻿using Asp.Versioning;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using YouTubeApiCleanArchitecture.Application.Features.Customers.Commands.CreateCustomer;
 using YouTubeApiCleanArchitecture.Application.Features.Customers.Commands.RemoveCustomer;
@@ -10,6 +11,7 @@ using YouTubeApiCleanArchitecture.Domain.Entities.Customers.DTOs;
 
 namespace YouTubeApiCleanArchitecture.API.Controllers.Version1.Customers;
 
+[Authorize]    
 [ApiVersion(ApiVersions.V1)]
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]

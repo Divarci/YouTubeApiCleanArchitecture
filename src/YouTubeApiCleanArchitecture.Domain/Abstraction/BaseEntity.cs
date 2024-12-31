@@ -1,23 +1,24 @@
 ﻿namespace YouTubeApiCleanArchitecture.Domain.Abstraction;
-public abstract class BaseEntity
+public abstract class BaseEntity : IDomainEventRaiser
 {
     private readonly List<IDomainEvent> _domainEvents = [];
 
     protected BaseEntity() { }
 
-    protected BaseEntity(Guid id)    
-        => Id = id;    
+    protected BaseEntity(Guid id)
+        => Id = id;
 
     public Guid Id { get; init; }
 
     public byte[] RowVersion { get; set; } = null!;
 
+
     public IReadOnlyList<IDomainEvent> GetDomainEvents()
-        => _domainEvents.ToList();
+       => _domainEvents.ToList();
 
     public void ClearDomainEvents()
         => _domainEvents.Clear();
 
-    protected void RaiseDomainEvent(IDomainEvent domainEvent)
+    public void RaiseDomainEvent(IDomainEvent domainEvent)
         => _domainEvents.Add(domainEvent);
 }

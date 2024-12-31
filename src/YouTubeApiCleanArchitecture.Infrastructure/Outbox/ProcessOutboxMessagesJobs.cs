@@ -86,7 +86,7 @@ internal sealed class ProcessOutboxMessagesJobs(
             .FromSqlRaw("""
                 SELECT TOP (@BatchSize) Id, Content 
                 FROM OutboxMessages WITH (UPDLOCK) 
-                WHERE Error IS NOT NULL 
+                WHERE ProcessedOnUtc IS NULL OR Error IS NOT NULL
                 ORDER BY OccuredOnUtc 
             """, new SqlParameter("@BatchSize", _outboxOptions.BatchSize))
             .Select(x => new OutboxMessagesResponse(x.Id, x.Content))

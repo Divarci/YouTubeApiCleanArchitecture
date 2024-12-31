@@ -1,5 +1,4 @@
 ﻿using Serilog.Context;
-using System.ComponentModel.DataAnnotations;
 using YouTubeApiCleanArchitecture.Domain.Abstraction;
 using YouTubeApiCleanArchitecture.Domain.Exceptions;
 
@@ -39,28 +38,48 @@ public class GlobalExceptionHandlingMiddleware(
         {
             RequestValidationException validationException
                 => Result<NoContentDto>.Failed(
-                        StatusCodes.Status400BadRequest,
-                        validationException.Errors),
+                    StatusCodes.Status400BadRequest,
+                    validationException.Errors),
 
             ConcurrencyException concurrencyException
-                 => Result<NoContentDto>.Failed(
-                        StatusCodes.Status400BadRequest,
-                        concurrencyException.Errors),
+                => Result<NoContentDto>.Failed(
+                    StatusCodes.Status400BadRequest,
+                    concurrencyException.Errors),
 
             NullObjectException nullObjectException
-                 => Result<NoContentDto>.Failed(
-                        StatusCodes.Status400BadRequest,
-                        nullObjectException.Errors),
+                => Result<NoContentDto>.Failed(
+                    StatusCodes.Status400BadRequest,
+                    nullObjectException.Errors),
 
             BadRequestException badRequestException
                 => Result<NoContentDto>.Failed(
-                        StatusCodes.Status400BadRequest,
-                        badRequestException.Errors),
+                    StatusCodes.Status400BadRequest,
+                    badRequestException.Errors),
 
             PayloadFormatException payloadFormatException
-               => Result<NoContentDto>.Failed(
-                       StatusCodes.Status400BadRequest,
-                       payloadFormatException.Errors),
+                => Result<NoContentDto>.Failed(
+                    StatusCodes.Status400BadRequest,
+                    payloadFormatException.Errors),
+
+            InvalidTokenException invalidTokenException
+                => Result<NoContentDto>.Failed(
+                    StatusCodes.Status400BadRequest,
+                    invalidTokenException.Errors),
+
+            AdminKeyNotMatchException adminKeyNotMatchException
+                => Result<NoContentDto>.Failed(
+                    StatusCodes.Status400BadRequest,
+                    adminKeyNotMatchException.Errors),
+
+            UserAlreadyExistException userAlreadyExistException
+                => Result<NoContentDto>.Failed(
+                    StatusCodes.Status400BadRequest,
+                    userAlreadyExistException.Errors),
+
+            InternalServerException InternalServerException
+                => Result<NoContentDto>.Failed(
+                    StatusCodes.Status500InternalServerError,
+                    InternalServerException.Errors),
 
             _ => Result<NoContentDto>.Failed(
                     StatusCodes.Status500InternalServerError,

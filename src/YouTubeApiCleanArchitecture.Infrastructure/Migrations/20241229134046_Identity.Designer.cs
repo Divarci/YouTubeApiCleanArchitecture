@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using YouTubeApiCleanArchitecture.Infrastructure;
 
@@ -11,9 +12,11 @@ using YouTubeApiCleanArchitecture.Infrastructure;
 namespace YouTubeApiCleanArchitecture.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241229134046_Identity")]
+    partial class Identity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -177,22 +180,6 @@ namespace YouTubeApiCleanArchitecture.Infrastructure.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("0e8c2030-7e8c-4436-96a2-92dee907be1d"),
-                            ConcurrencyStamp = "ff52dfa7-d39c-45cc-aaa3-c74c23b06bc9",
-                            Name = "User",
-                            NormalizedName = "USER"
-                        },
-                        new
-                        {
-                            Id = new Guid("b61f0859-cf2e-47f9-8b94-86cbee824344"),
-                            ConcurrencyStamp = "e6995c25-d137-4e11-9e86-de56b2524f90",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        });
                 });
 
             modelBuilder.Entity("YouTubeApiCleanArchitecture.Domain.Entities.Identity.Users.AppUser", b =>

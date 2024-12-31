@@ -1,15 +1,23 @@
 ﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Quartz;
+using System.Text;
 using YouTubeApiCleanArchitecture.Application.Abstraction.Caching;
 using YouTubeApiCleanArchitecture.Application.Abstraction.Emailing;
+using YouTubeApiCleanArchitecture.Application.Abstraction.TokenProviding;
 using YouTubeApiCleanArchitecture.Domain.Abstraction;
+using YouTubeApiCleanArchitecture.Domain.Entities.Identity.Roles;
+using YouTubeApiCleanArchitecture.Domain.Entities.Identity.Users;
 using YouTubeApiCleanArchitecture.Infrastructure.Outbox;
 using YouTubeApiCleanArchitecture.Infrastructure.Repositories;
 using YouTubeApiCleanArchitecture.Infrastructure.Services.Caching;
 using YouTubeApiCleanArchitecture.Infrastructure.Services.Emailing;
+using YouTubeApiCleanArchitecture.Infrastructure.Services.TokenProviding;
 using YouTubeApiCleanArchitecture.Infrastructure.UnitOfWorks;
 
 namespace YouTubeApiCleanArchitecture.Infrastructure;
@@ -30,6 +38,8 @@ public static class ServiceRegister
         AddApiVersioning(services);
 
         AddBackgroundJobs(services, config);
+
+        AddIdentity(services, config);
 
         return services;
     }
@@ -115,4 +125,49 @@ public static class ServiceRegister
         return services;
     }
 
+    private static IServiceCollection AddIdentity(
+        this IServiceCollection services,
+        IConfiguration config)
+    {
+        services
+            .AddIdentityCore<AppUser>(opt =>
+            {
+                opt.User.RequireUniqueEmail = true;
+                opt.Password.RequiredUniqueChars = 2;
+                opt.Password.RequiredLength = 8;
+                opt.Lockout.MaxFailedAccessAttempts = 3;
+                opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromSeconds(60);
+            })
+            .AddRoles<AppRole>()
+            .AddEntityFrameworkStores<AppDbContext>();
+
+        services
+            .AddAuthentication(opt =>
+            {
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, opt =>
+            {
+                opt.SaveToken = true;
+                opt.TokenValidationParameters = new()
+                {
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(config["JWT:Secret"]!)),
+                    ValidateLifetime = false,
+                    ValidIssuer = config["JWT:Issuer"],
+                    ValidAudience = config["JWT:Audience"],
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
+
+        services.Configure<TokenSettings>(config.GetSection("JWT"));
+
+        services.AddTransient<ITokenService, TokenService>();
+
+        return services;
+    }
 }

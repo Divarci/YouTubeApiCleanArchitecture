@@ -1,8 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using YouTubeApiCleanArchitecture.Application.Abstraction.Behaviours;
-using YouTubeApiCleanArchitecture.Application.Abstraction.Emailing;
-using YouTubeApiCleanArchitecture.Domain.Abstraction;
 
 namespace YouTubeApiCleanArchitecture.Application;
 public static class ServiceRegister
@@ -31,5 +29,5 @@ public static class ServiceRegister
         });
 
         return services;
-    }
+    }  
 }
