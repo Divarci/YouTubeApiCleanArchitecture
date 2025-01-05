@@ -3,6 +3,7 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using YouTubeApiCleanArchitecture.Application.Abstraction.Messaging.Queries;
 using YouTubeApiCleanArchitecture.Domain.Abstraction;
+using YouTubeApiCleanArchitecture.Domain.Abstraction.ResultPattern;
 using YouTubeApiCleanArchitecture.Domain.Entities.Customers;
 
 namespace YouTubeApiCleanArchitecture.Application.Features.Customers.Queries.GetAllCustomers;
@@ -18,9 +19,10 @@ internal sealed class GetAllCustomersQueryHandler(
         CancellationToken cancellationToken)
     {
         var customers = await _unitOfWork.Repository<Customer>()
-            .GetAll()
-            .ProjectTo<CustomerResponse>(_mapper.ConfigurationProvider)
-            .ToListAsync(cancellationToken);
+            .GetAllAsync<CustomerResponse>(
+                mapper: _mapper, 
+                cancellationToken: cancellationToken,
+                enableTracking: false);
 
         var response = new CustomerResponseCollection
         {

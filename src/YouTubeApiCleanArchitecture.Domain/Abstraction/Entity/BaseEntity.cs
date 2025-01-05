@@ -1,4 +1,6 @@
-﻿namespace YouTubeApiCleanArchitecture.Domain.Abstraction;
+﻿using YouTubeApiCleanArchitecture.Domain.Abstraction.DomainEvents;
+
+namespace YouTubeApiCleanArchitecture.Domain.Abstraction.Entity;
 public abstract class BaseEntity : IDomainEventRaiser
 {
     private readonly List<IDomainEvent> _domainEvents = [];

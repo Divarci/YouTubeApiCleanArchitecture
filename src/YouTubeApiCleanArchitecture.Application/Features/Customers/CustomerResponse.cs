@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using YouTubeApiCleanArchitecture.Application.Features.Products;
-using YouTubeApiCleanArchitecture.Domain.Abstraction;
+using YouTubeApiCleanArchitecture.Domain.Abstraction.ResultPattern;
 using YouTubeApiCleanArchitecture.Domain.Entities.Customers;
 using YouTubeApiCleanArchitecture.Domain.Entities.Customers.ValueObject;
 

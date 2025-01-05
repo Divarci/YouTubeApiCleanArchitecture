@@ -1,4 +1,4 @@
-﻿using YouTubeApiCleanArchitecture.Domain.Abstraction;
+﻿using YouTubeApiCleanArchitecture.Domain.Abstraction.Entity;
 using YouTubeApiCleanArchitecture.Domain.Entities.Products.DTOs;
 using YouTubeApiCleanArchitecture.Domain.Entities.Shared;
 
@@ -20,9 +20,9 @@ public sealed class Product : BaseEntity
 
     public Money UnitPrice { get; private set; } = null!;
 
-    public static Product Create(CreateProductDto dto)
+    public static Product Create(CreateProductDto dto, Guid productId)
         => new (
-            Guid.NewGuid(),
+            productId,
             new Title(dto.Description),
             new Money(dto.UnitPrice));
 

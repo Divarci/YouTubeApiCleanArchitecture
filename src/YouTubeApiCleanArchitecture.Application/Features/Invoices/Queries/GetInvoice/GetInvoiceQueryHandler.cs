@@ -3,6 +3,7 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using YouTubeApiCleanArchitecture.Application.Abstraction.Messaging.Queries;
 using YouTubeApiCleanArchitecture.Domain.Abstraction;
+using YouTubeApiCleanArchitecture.Domain.Abstraction.ResultPattern;
 using YouTubeApiCleanArchitecture.Domain.Entities.Invoices;
 
 namespace YouTubeApiCleanArchitecture.Application.Features.Invoices.Queries.GetInvoice;
@@ -17,15 +18,18 @@ internal sealed class GetInvoiceQueryHandler(
         GetInvoiceQuery request,
         CancellationToken cancellationToken)
     {
-        var response = await _unitOfWork.Repository<Invoice>()
-            .GetAll()
-            .Include(x => x.PurchasedProducts)
-            .ProjectTo<InvoiceResponse>(_mapper.ConfigurationProvider)
-            .FirstOrDefaultAsync(x => x.Id == request.InvoiceId, cancellationToken);
+        var invoice = await _unitOfWork.Repository<Invoice>()
+            .GetAsync(
+                enableTracking: false,
+                includes: [x => x.Include(x => x.PurchasedProducts)],
+                predicates: [x => x.Id == request.InvoiceId],
+                cancellationToken: cancellationToken);
 
-        if (response == null)
+        if (invoice is null)
             return Result<InvoiceResponse>
                 .Failed(400, "Null.Error", $"The invoice with the id: {request.InvoiceId} not exist");
+
+        var response = _mapper.Map<InvoiceResponse>(invoice);
 
         return Result<InvoiceResponse>
             .Success(response, 200);

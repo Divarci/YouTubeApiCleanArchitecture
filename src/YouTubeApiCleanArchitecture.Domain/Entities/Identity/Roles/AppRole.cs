@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using YouTubeApiCleanArchitecture.Domain.Abstraction;
+using YouTubeApiCleanArchitecture.Domain.Abstraction.Entity;
 using YouTubeApiCleanArchitecture.Domain.Attributes;
 
 namespace YouTubeApiCleanArchitecture.Domain.Entities.Identity.Roles;

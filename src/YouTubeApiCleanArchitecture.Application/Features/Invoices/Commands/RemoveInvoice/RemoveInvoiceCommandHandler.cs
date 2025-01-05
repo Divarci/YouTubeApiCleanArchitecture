@@ -1,5 +1,8 @@
-﻿using YouTubeApiCleanArchitecture.Application.Abstraction.Messaging.Commands;
+﻿using Microsoft.EntityFrameworkCore;
+using YouTubeApiCleanArchitecture.Application.Abstraction.Messaging.Commands;
 using YouTubeApiCleanArchitecture.Domain.Abstraction;
+using YouTubeApiCleanArchitecture.Domain.Abstraction.ResultPattern;
+using YouTubeApiCleanArchitecture.Domain.Entities.Customers;
 using YouTubeApiCleanArchitecture.Domain.Entities.Invoices;
 
 namespace YouTubeApiCleanArchitecture.Application.Features.Invoices.Commands.RemoveInvoice;
@@ -9,18 +12,24 @@ internal sealed class RemoveInvoiceCommandHandler(
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
     public async Task<Result<NoContentDto>> Handle(
-        RemoveInvoiceCommand request, 
+        RemoveInvoiceCommand request,
         CancellationToken cancellationToken)
     {
         var invoice = await _unitOfWork.Repository<Invoice>()
-            .GetByIdAsync(request.InvoiceId, cancellationToken);
+            .GetAsync(
+                enableTracking: true,
+                predicates: [x => x.Id == request.InvoiceId],
+                includes: [x => x.Include(x => x.Customer)],
+                cancellationToken: cancellationToken);
 
         if (invoice is null)
             return Result<NoContentDto>
                 .Failed(400, "Null.Error", $"The invoice with the id: {request.InvoiceId} not exist");
 
-        _unitOfWork.Repository<Invoice>()
-            .Delete(invoice);
+        invoice.Customer.RemoveInvoice(invoice);
+
+        _unitOfWork.Repository<Customer>()
+            .Update(invoice.Customer);
 
         await _unitOfWork.CommitAsync(cancellationToken);
 

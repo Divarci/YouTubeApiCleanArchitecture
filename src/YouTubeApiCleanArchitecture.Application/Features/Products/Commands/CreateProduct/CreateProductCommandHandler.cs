@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using YouTubeApiCleanArchitecture.Application.Abstraction.Messaging.Commands;
 using YouTubeApiCleanArchitecture.Domain.Abstraction;
+using YouTubeApiCleanArchitecture.Domain.Abstraction.ResultPattern;
 using YouTubeApiCleanArchitecture.Domain.Entities.Products;
 
 namespace YouTubeApiCleanArchitecture.Application.Features.Products.Commands.CreateProduct;
@@ -16,7 +17,7 @@ internal sealed class CreateProductCommandHandler(
         CreateProductCommand request,
         CancellationToken cancellationToken)
     {
-        var product = Product.Create(request.Dto);
+        var product = Product.Create(request.Dto, Guid.NewGuid());
 
         await _unitOfWork.Repository<Product>()
             .CreateAsync(product, cancellationToken);

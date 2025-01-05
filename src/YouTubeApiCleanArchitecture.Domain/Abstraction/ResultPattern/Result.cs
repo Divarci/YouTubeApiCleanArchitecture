@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace YouTubeApiCleanArchitecture.Domain.Abstraction;
+namespace YouTubeApiCleanArchitecture.Domain.Abstraction.ResultPattern;
 
 public class Result<TDto> : ILoggable where TDto : IResult
 {

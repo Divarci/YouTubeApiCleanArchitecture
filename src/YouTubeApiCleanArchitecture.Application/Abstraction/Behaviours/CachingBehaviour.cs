@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
 using YouTubeApiCleanArchitecture.Application.Abstraction.Caching;
-using YouTubeApiCleanArchitecture.Domain.Abstraction;
+using YouTubeApiCleanArchitecture.Domain.Abstraction.ResultPattern;
 
 namespace YouTubeApiCleanArchitecture.Application.Abstraction.Behaviours;
 public class CachingBehaviour<TRequest, TResponse>(

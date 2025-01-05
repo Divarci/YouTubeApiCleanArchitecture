@@ -2,6 +2,7 @@
 using YouTubeApiCleanArchitecture.Application.Abstraction.Messaging.Queries;
 using YouTubeApiCleanArchitecture.Application.Features.Products.Queries.GetProduct;
 using YouTubeApiCleanArchitecture.Domain.Abstraction;
+using YouTubeApiCleanArchitecture.Domain.Abstraction.ResultPattern;
 using YouTubeApiCleanArchitecture.Domain.Entities.Customers;
 
 namespace YouTubeApiCleanArchitecture.Application.Features.Customers.Queries.GetCustomer;

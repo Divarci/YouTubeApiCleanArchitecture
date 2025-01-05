@@ -1,4 +1,4 @@
-﻿namespace YouTubeApiCleanArchitecture.Domain.Abstraction;
+﻿namespace YouTubeApiCleanArchitecture.Domain.Abstraction.DomainEvents;
 
 public interface IDomainEventRaiser
 {

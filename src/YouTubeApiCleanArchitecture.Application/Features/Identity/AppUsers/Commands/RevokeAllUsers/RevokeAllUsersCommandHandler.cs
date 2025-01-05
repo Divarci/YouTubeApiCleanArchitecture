@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using YouTubeApiCleanArchitecture.Application.Abstraction.Messaging.Commands;
-using YouTubeApiCleanArchitecture.Domain.Abstraction;
+using YouTubeApiCleanArchitecture.Domain.Abstraction.ResultPattern;
 using YouTubeApiCleanArchitecture.Domain.Entities.Identity.Roles;
 using YouTubeApiCleanArchitecture.Domain.Entities.Identity.Users;
 
 namespace YouTubeApiCleanArchitecture.Application.Features.Identity.AppUsers.Commands.RevokeAllUsers;
 internal sealed class RevokeAllUsersCommandHandler(
     UserManager<AppUser> userManager,
-    RoleManager<AppRole> roleManager) : ICommandHandler<RevokeAllUsersCommand, NoContentDto>
+    RoleManager<AppRole> roleManager) : ICommandHandler<RevokeAllUsersCommand>
 {
     private readonly UserManager<AppUser> _userManager = userManager;
     private readonly RoleManager<AppRole> _roleManager = roleManager;

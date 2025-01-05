@@ -1,5 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper.QueryableExtensions;
+using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
+using System.Linq.Expressions;
 using YouTubeApiCleanArchitecture.Domain.Abstraction;
+using YouTubeApiCleanArchitecture.Domain.Abstraction.ResultPattern;
+using YouTubeApiCleanArchitecture.Domain.Abstraction.Entity;
 
 namespace YouTubeApiCleanArchitecture.Infrastructure.Repositories;
 public class GenericRepository<TEntity>(
@@ -61,4 +67,56 @@ public class GenericRepository<TEntity>(
         => _context
             .Set<TEntity>()
             .RemoveRange(entityCollection);
+
+    public async Task<List<TResponse>> GetAllAsync<TResponse>(
+       IMapper mapper,
+       bool enableTracking = true,
+       Expression<Func<TEntity, bool>>[]? predicates = null,
+       Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
+       Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>[]? includes = null,
+       CancellationToken cancellationToken = default)
+       where TResponse : IResult
+    {
+        IQueryable<TEntity> query = _context.Set<TEntity>();
+
+        if (!enableTracking)
+            query = query.AsNoTracking();
+
+        if (includes is not null)
+            foreach (var include in includes)
+                query = include(query);
+
+        if (predicates is not null)
+            foreach (var predicate in predicates)
+                query = query.Where(predicate);
+
+        if (orderBy is not null)
+            query = orderBy(query);
+
+        var response = query.ProjectTo<TResponse>(mapper.ConfigurationProvider);
+
+        return await response.ToListAsync(cancellationToken);
+    }
+
+    public async Task<TEntity?> GetAsync(
+        bool enableTracking = false,
+        Expression<Func<TEntity, bool>>[]? predicates = null,
+        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>[]? includes = null,
+        CancellationToken cancellationToken = default)
+    {
+        IQueryable<TEntity> query = _context.Set<TEntity>();
+
+        if (!enableTracking)
+            query = query.AsNoTracking();
+
+        if (includes is not null)
+            foreach (var include in includes)
+                query = include(query);
+
+        if (predicates is not null)
+            foreach (var predicate in predicates)
+                query = query.Where(predicate);
+
+        return await query.FirstOrDefaultAsync(cancellationToken);
+    }
 }

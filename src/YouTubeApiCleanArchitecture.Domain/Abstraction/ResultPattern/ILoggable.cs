@@ -1,4 +1,4 @@
-﻿namespace YouTubeApiCleanArchitecture.Domain.Abstraction;
+﻿namespace YouTubeApiCleanArchitecture.Domain.Abstraction.ResultPattern;
 public interface ILoggable
 {
     public bool IsNotSuccessfull { get; set; }

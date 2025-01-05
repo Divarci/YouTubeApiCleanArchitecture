@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using YouTubeApiCleanArchitecture.Domain.Abstraction;
+using YouTubeApiCleanArchitecture.Domain.Abstraction.ResultPattern;
 
 namespace YouTubeApiCleanArchitecture.Application.Abstraction.Messaging.Commands;
 public interface ICommand : IRequest<Result<NoContentDto>>;

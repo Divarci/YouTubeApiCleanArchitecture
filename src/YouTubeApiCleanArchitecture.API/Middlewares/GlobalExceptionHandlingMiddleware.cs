@@ -1,5 +1,5 @@
 ﻿using Serilog.Context;
-using YouTubeApiCleanArchitecture.Domain.Abstraction;
+using YouTubeApiCleanArchitecture.Domain.Abstraction.ResultPattern;
 using YouTubeApiCleanArchitecture.Domain.Exceptions;
 
 namespace YouTubeApiCleanArchitecture.API.Middlewares;

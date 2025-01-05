@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using YouTubeApiCleanArchitecture.Application.Abstraction.Messaging.Commands;
 using YouTubeApiCleanArchitecture.Domain.Abstraction;
+using YouTubeApiCleanArchitecture.Domain.Abstraction.ResultPattern;
 using YouTubeApiCleanArchitecture.Domain.Entities.Customers;
 
 namespace YouTubeApiCleanArchitecture.Application.Features.Customers.Commands.CreateCustomer;
@@ -15,7 +16,7 @@ internal sealed class CreateCustomerCommandHandler(
         CreateCustomerCommand request, 
         CancellationToken cancellationToken)
     {
-        var customer = Customer.Create(request.Dto);
+        var customer = Customer.Create(request.Dto, Guid.NewGuid());
 
         await _unitOfWork.Repository<Customer>()
             .CreateAsync(customer);

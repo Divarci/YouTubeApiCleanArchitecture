@@ -8,6 +8,7 @@ using YouTubeApiCleanArchitecture.Domain.Entities.Invoices.ValueObjects;
 using YouTubeApiCleanArchitecture.Domain.Entities.Invoices.DTOs;
 using YouTubeApiCleanArchitecture.Domain.Entities.Invoices.Events;
 using YouTubeApiCleanArchitecture.Domain.Exceptions;
+using YouTubeApiCleanArchitecture.Domain.Abstraction.Entity;
 
 namespace YouTubeApiCleanArchitecture.Domain.Entities.Invoices;
 public sealed class Invoice : BaseEntity
@@ -39,6 +40,7 @@ public sealed class Invoice : BaseEntity
 
     public static async Task<Invoice> Create(
         CreateInvoiceDto dto,
+        Guid invoiceId,
         IUnitOfWork unitOfWork)
     {
         if(dto.CustomerId == Guid.Empty)
@@ -57,7 +59,6 @@ public sealed class Invoice : BaseEntity
             throw new BadRequestException(
                 ["Product Quantity must be set and must be positive number in your purchased product list"]);
 
-        var invoiceId = Guid.NewGuid();
         ICollection<InvoiceItem> purchasedProducts = [];
 
         foreach (var purchasedProduct in dto.PurchasedProducts)

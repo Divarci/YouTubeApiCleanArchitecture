@@ -1,17 +1,19 @@
-﻿using YouTubeApiCleanArchitecture.Domain.Abstraction;
+﻿using YouTubeApiCleanArchitecture.Domain.Abstraction.Entity;
 using YouTubeApiCleanArchitecture.Domain.Entities.Customers.DTOs;
 using YouTubeApiCleanArchitecture.Domain.Entities.Customers.Events;
 using YouTubeApiCleanArchitecture.Domain.Entities.Customers.ValueObject;
 using YouTubeApiCleanArchitecture.Domain.Entities.Invoices;
+using YouTubeApiCleanArchitecture.Domain.Entities.Invoices.Events;
 using YouTubeApiCleanArchitecture.Domain.Entities.Shared;
 
 namespace YouTubeApiCleanArchitecture.Domain.Entities.Customers;
 public sealed class Customer : BaseEntity
 {
     private Customer(
+        Guid customerId,
         Title title, 
         Address address, 
-        Money balance)
+        Money balance) : base(customerId)
     {
         Title = title;
         Address = address;
@@ -29,9 +31,10 @@ public sealed class Customer : BaseEntity
 
     public ICollection<Invoice> Invoices { get; private set; } = null!;
 
-    public static Customer Create(CreateCustomerDto dto)
+    public static Customer Create(CreateCustomerDto dto, Guid customerId)
     {
         var customer = new Customer(
+            customerId,
             new Title(dto.Title),
             new Address(
                 dto.FirstLineAddress,
@@ -58,8 +61,21 @@ public sealed class Customer : BaseEntity
                 dto.Country);
     }
 
-    public void UpdateBalance(Money invoiceAmount)
+    public void IncreaseBalance(Money invoiceAmount)
         => Balance = new Money(
             Balance.Value + invoiceAmount.Value);
-    
+
+    public void DecreaseBalance(decimal invoiceAmount)
+        => Balance = new Money(
+            Balance.Value - invoiceAmount);
+
+    public void RemoveInvoice(Invoice invoice)
+    {
+        Invoices.Remove(invoice);
+
+        RaiseDomainEvent(new InvoiceRemovedDomainEvent(
+            invoice.Id,
+            invoice.TotalBalance.Value));
+    }
+
 }

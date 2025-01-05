@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using YouTubeApiCleanArchitecture.Application.Abstraction.Messaging.Commands;
 using YouTubeApiCleanArchitecture.Domain.Abstraction;
+using YouTubeApiCleanArchitecture.Domain.Abstraction.ResultPattern;
 using YouTubeApiCleanArchitecture.Domain.Entities.Customers;
 using YouTubeApiCleanArchitecture.Domain.Entities.Products;
 
@@ -16,9 +17,11 @@ internal sealed class RemoveCustomerCommandHandler(
         CancellationToken cancellationToken)
     {
         var customer = await _unitOfWork.Repository<Customer>()
-          .GetAll()
-          .Include(x => x.Invoices)
-          .FirstOrDefaultAsync(x => x.Id == request.CustomerId, cancellationToken);
+            .GetAsync(
+                predicates: [x=>x.Id == request.CustomerId],
+                includes: [x => x.Include(x => x.Invoices)],
+                cancellationToken: cancellationToken,
+                enableTracking: false);
 
         if (customer is null)
             return Result<NoContentDto>
