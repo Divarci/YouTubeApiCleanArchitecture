@@ -20,9 +20,9 @@ public sealed class Product : BaseEntity
 
     public Money UnitPrice { get; private set; } = null!;
 
-    public static Product Create(CreateProductDto dto)
+    public static Product Create(CreateProductDto dto, Guid id)
         => new (
-            Guid.NewGuid(),
+            id,
             new Title(dto.Description),
             new Money(dto.UnitPrice));
 

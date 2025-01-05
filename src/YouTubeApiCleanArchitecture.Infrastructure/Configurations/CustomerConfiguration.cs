@@ -47,7 +47,7 @@ public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
         builder.HasMany(customer => customer.Invoices)
             .WithOne(x => x.Customer)
             .HasForeignKey(x => x.CustomerId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
 
         builder.Property(x => x.RowVersion)
             .IsRowVersion();

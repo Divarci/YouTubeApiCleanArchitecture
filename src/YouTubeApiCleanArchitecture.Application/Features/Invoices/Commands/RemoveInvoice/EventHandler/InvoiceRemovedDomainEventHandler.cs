@@ -1,29 +1,26 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
 using Serilog.Context;
-using YouTubeApiCleanArchitecture.Application.Abstraction.Emailing;
 using YouTubeApiCleanArchitecture.Domain.Abstraction;
 using YouTubeApiCleanArchitecture.Domain.Entities.Customers;
-using YouTubeApiCleanArchitecture.Domain.Entities.Customers.Events;
+using YouTubeApiCleanArchitecture.Domain.Entities.Invoices.Events;
 
-namespace YouTubeApiCleanArchitecture.Application.Features.Customers.Commands.CreateCustomer.EventHandlers;
-internal sealed class CustomerCreatedDomainEventHandler(
-    ILogger<CustomerCreatedDomainEventHandler> logger,
-    IUnitOfWork unitOfWork,
-    IEmailService emailService) : INotificationHandler<CustomerCreatedDomainEvent>
+namespace YouTubeApiCleanArchitecture.Application.Features.Invoices.Commands.RemoveInvoice.EventHandler;
+internal class InvoiceRemovedDomainEventHandler(
+    ILogger<InvoiceRemovedDomainEventHandler> logger,
+    IUnitOfWork unitOfWork) : INotificationHandler<InvoiceRemovedDomainEvent>
 {
-    private readonly ILogger<CustomerCreatedDomainEventHandler> _logger = logger;
+    private readonly ILogger<InvoiceRemovedDomainEventHandler> _logger = logger;
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
-    private readonly IEmailService _emailService = emailService;
 
     public async Task Handle(
-        CustomerCreatedDomainEvent notification,
+        InvoiceRemovedDomainEvent notification,
         CancellationToken cancellationToken)
     {
-        var eventName = typeof(CustomerCreatedDomainEvent).Name;
+        var eventName = typeof(InvoiceRemovedDomainEvent).Name;
 
         _logger.LogInformation("Executing event {EventName}", eventName);
-
+        
         var customer = await _unitOfWork.Repository<Customer>()
             .GetByIdAsync(notification.CustomerId, cancellationToken);
 
@@ -37,7 +34,11 @@ internal sealed class CustomerCreatedDomainEventHandler(
             return;
         }
 
-        await _emailService.SendAsync();
+        customer.DecreaseBalance(notification.InvoiceBalance);
+
+        _unitOfWork.Repository<Customer>().Update(customer);
+
+        await _unitOfWork.CommitAsync(cancellationToken);
 
         _logger.LogInformation("Event {EventName} processed successfully", eventName);
     }

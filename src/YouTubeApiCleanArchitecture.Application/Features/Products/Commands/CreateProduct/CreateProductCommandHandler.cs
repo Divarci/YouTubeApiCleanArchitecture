@@ -16,7 +16,7 @@ internal sealed class CreateProductCommandHandler(
         CreateProductCommand request,
         CancellationToken cancellationToken)
     {
-        var product = Product.Create(request.Dto);
+        var product = Product.Create(request.Dto, Guid.NewGuid());
 
         await _unitOfWork.Repository<Product>()
             .CreateAsync(product, cancellationToken);

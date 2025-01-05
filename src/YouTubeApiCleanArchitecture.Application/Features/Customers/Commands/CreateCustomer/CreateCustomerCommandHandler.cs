@@ -15,10 +15,10 @@ internal sealed class CreateCustomerCommandHandler(
         CreateCustomerCommand request, 
         CancellationToken cancellationToken)
     {
-        var customer = Customer.Create(request.Dto);
+        var customer = Customer.Create(request.Dto, Guid.NewGuid());
 
         await _unitOfWork.Repository<Customer>()
-            .CreateAsync(customer);
+            .CreateAsync(customer, cancellationToken);
 
         await _unitOfWork.CommitAsync(cancellationToken);
 

@@ -17,11 +17,11 @@ internal sealed class GetAllProductsQueryHandler(
         GetAllProductsQuery request,
         CancellationToken cancellationToken)
     {
-        var products = await _unitOfWork
-            .Repository<Product>()
-            .GetAll()
-            .ProjectTo<ProductResponse>(_mapper.ConfigurationProvider)
-            .ToListAsync(cancellationToken);
+        var products = await _unitOfWork.Repository<Product>()
+            .GetAllAsync<ProductResponse>(
+                enableTracking: false,
+                mapper: _mapper,
+                cancellationToken : cancellationToken);
 
         var response = new ProductResponseCollection
         {

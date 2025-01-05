@@ -8,7 +8,7 @@ using YouTubeApiCleanArchitecture.Domain.Entities.Identity.Users;
 namespace YouTubeApiCleanArchitecture.Application.Features.Identity.AppUsers.Commands.RevokeAllUsers;
 internal sealed class RevokeAllUsersCommandHandler(
     UserManager<AppUser> userManager,
-    RoleManager<AppRole> roleManager) : ICommandHandler<RevokeAllUsersCommand, NoContentDto>
+    RoleManager<AppRole> roleManager) : ICommandHandler<RevokeAllUsersCommand>
 {
     private readonly UserManager<AppUser> _userManager = userManager;
     private readonly RoleManager<AppRole> _roleManager = roleManager;

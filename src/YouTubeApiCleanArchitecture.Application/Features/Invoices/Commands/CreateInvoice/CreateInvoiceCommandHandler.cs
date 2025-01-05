@@ -15,7 +15,7 @@ internal sealed class CreateInvoiceCommandHandler(
         CreateInvoiceCommand request,
         CancellationToken cancellationToken)
     {
-        var invoice = await Invoice.Create(request.Dto, _unitOfWork);
+        var invoice = await Invoice.Create(request.Dto, Guid.NewGuid(), _unitOfWork);
 
         await _unitOfWork.Repository<Invoice>()
             .CreateAsync(invoice, cancellationToken);

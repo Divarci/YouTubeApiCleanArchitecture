@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using YouTubeApiCleanArchitecture.Application.Abstraction.Messaging.Queries;
 using YouTubeApiCleanArchitecture.Domain.Abstraction;
@@ -17,11 +16,14 @@ internal sealed class GetInvoiceQueryHandler(
         GetInvoiceQuery request,
         CancellationToken cancellationToken)
     {
-        var response = await _unitOfWork.Repository<Invoice>()
-            .GetAll()
-            .Include(x => x.PurchasedProducts)
-            .ProjectTo<InvoiceResponse>(_mapper.ConfigurationProvider)
-            .FirstOrDefaultAsync(x => x.Id == request.InvoiceId, cancellationToken);
+        var invoice = await _unitOfWork.Repository<Invoice>()
+            .GetAsync(
+                enableTracking: false,
+                predicates: [x => x.Id == request.InvoiceId],
+                include: [x => x.Include(x => x.PurchasedProducts)],
+                cancellationToken: cancellationToken);
+            
+        var response = _mapper.Map<InvoiceResponse>(invoice);             
 
         if (response == null)
             return Result<InvoiceResponse>

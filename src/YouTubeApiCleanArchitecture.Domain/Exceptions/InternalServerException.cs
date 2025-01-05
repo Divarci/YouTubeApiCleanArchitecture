@@ -1,5 +1,4 @@
-﻿
-using YouTubeApiCleanArchitecture.Domain.Abstraction;
+﻿using YouTubeApiCleanArchitecture.Domain.Abstraction;
 
 namespace YouTubeApiCleanArchitecture.Domain.Exceptions;
 public class InternalServerException(

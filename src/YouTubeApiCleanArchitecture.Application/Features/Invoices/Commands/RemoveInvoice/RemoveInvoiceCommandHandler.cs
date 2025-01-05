@@ -1,4 +1,5 @@
-﻿using YouTubeApiCleanArchitecture.Application.Abstraction.Messaging.Commands;
+﻿using Microsoft.EntityFrameworkCore;
+using YouTubeApiCleanArchitecture.Application.Abstraction.Messaging.Commands;
 using YouTubeApiCleanArchitecture.Domain.Abstraction;
 using YouTubeApiCleanArchitecture.Domain.Entities.Invoices;
 
@@ -13,14 +14,20 @@ internal sealed class RemoveInvoiceCommandHandler(
         CancellationToken cancellationToken)
     {
         var invoice = await _unitOfWork.Repository<Invoice>()
-            .GetByIdAsync(request.InvoiceId, cancellationToken);
+            .GetAsync(
+                enableTracking: true,
+                predicates: [x => x.Id == request.InvoiceId],
+                include: [x=>x.Include(x=>x.Customer)],
+                cancellationToken: cancellationToken);
 
         if (invoice is null)
             return Result<NoContentDto>
                 .Failed(400, "Null.Error", $"The invoice with the id: {request.InvoiceId} not exist");
 
+        invoice.Customer.RemoveInvoice(invoice);
+
         _unitOfWork.Repository<Invoice>()
-            .Delete(invoice);
+            .Update(invoice);
 
         await _unitOfWork.CommitAsync(cancellationToken);
 

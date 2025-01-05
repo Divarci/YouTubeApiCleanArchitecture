@@ -1,9 +1,7 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using YouTubeApiCleanArchitecture.Application.Abstraction.Messaging.Commands;
 using YouTubeApiCleanArchitecture.Domain.Abstraction;
 using YouTubeApiCleanArchitecture.Domain.Entities.Customers;
-using YouTubeApiCleanArchitecture.Domain.Entities.Products;
 
 namespace YouTubeApiCleanArchitecture.Application.Features.Customers.Commands.RemoveCustomer;
 internal sealed class RemoveCustomerCommandHandler(
@@ -16,9 +14,11 @@ internal sealed class RemoveCustomerCommandHandler(
         CancellationToken cancellationToken)
     {
         var customer = await _unitOfWork.Repository<Customer>()
-          .GetAll()
-          .Include(x => x.Invoices)
-          .FirstOrDefaultAsync(x => x.Id == request.CustomerId, cancellationToken);
+            .GetAsync(
+                enableTracking: true,
+                cancellationToken: cancellationToken,
+                predicates: [x=>x.Id == request.CustomerId],
+                include: [x => x.Include(x => x.Invoices)]);
 
         if (customer is null)
             return Result<NoContentDto>
