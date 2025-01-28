@@ -24,4 +24,8 @@
     <ProjectReference Include="..\YouTubeApiCleanArchitecture.Domain\YouTubeApiCleanArchitecture.Domain.csproj" />
   </ItemGroup>
 
+	<ItemGroup>
+		<InternalsVisibleTo Include="YouTubeApiCleanArchitecture.Application.UnitTests" />
+	</ItemGroup>
+
 </Project>

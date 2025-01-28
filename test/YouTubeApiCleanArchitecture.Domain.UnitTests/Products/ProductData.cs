@@ -18,9 +18,9 @@ public static class ProductData
             {WoodId , new("Wood", 5.25m)}
         };
 
-    public static readonly List<Product> Catalogue = LoadroductData();
+    public static readonly List<Product> Catalogue = LoadProductData();
 
-    private static List<Product> LoadroductData()
+    private static List<Product> LoadProductData()
     {
         var catalogue = new List<Product>();
 

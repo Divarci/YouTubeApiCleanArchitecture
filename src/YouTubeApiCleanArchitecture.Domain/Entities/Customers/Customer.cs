@@ -29,7 +29,7 @@ public sealed class Customer : BaseEntity
     public Money Balance { get; private set; } = null!;
 
 
-    public ICollection<Invoice> Invoices { get; private set; } = null!;
+    public ICollection<Invoice> Invoices { get; private set; } = [];
 
     public static Customer Create(CreateCustomerDto dto, Guid customerId)
     {

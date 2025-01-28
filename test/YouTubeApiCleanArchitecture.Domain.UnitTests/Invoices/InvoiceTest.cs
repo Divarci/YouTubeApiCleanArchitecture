@@ -41,7 +41,7 @@ public class Invoicetest
             InvoiceData.Customer.Id,
             InvoiceData.InvoiceId,
             InvoiceData.ValidPurchasedProducts,
-        _unitOfWork);
+            _unitOfWork);
 
         var @event = invoice.GetDomainEvents()[0] as InvoiceCreatedDomainEvent;
 
