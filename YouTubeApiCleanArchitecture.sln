@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YouTubeApiCleanArchitecture
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YouTubeApiCleanArchitecture.Application.UnitTests", "test\YouTubeApiCleanArchitecture.Application.UnitTests\YouTubeApiCleanArchitecture.Application.UnitTests.csproj", "{A7C43422-928E-4356-94A9-F51C627DBDCA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YouTubeApiCleanArchitecture.Application.IntegrationTests", "test\YouTubeApiCleanArchitecture.Application.IntegrationTests\YouTubeApiCleanArchitecture.Application.IntegrationTests.csproj", "{3663F2B9-E2C9-4564-B609-4371F5F01C58}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,10 @@ Global
 		{A7C43422-928E-4356-94A9-F51C627DBDCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7C43422-928E-4356-94A9-F51C627DBDCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A7C43422-928E-4356-94A9-F51C627DBDCA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3663F2B9-E2C9-4564-B609-4371F5F01C58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3663F2B9-E2C9-4564-B609-4371F5F01C58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3663F2B9-E2C9-4564-B609-4371F5F01C58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3663F2B9-E2C9-4564-B609-4371F5F01C58}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -66,5 +72,6 @@ Global
 		{2D7E6D45-F649-463A-B653-CC23E1D7CF45} = {3E4A3527-8166-4105-BDFB-1E068D172666}
 		{722991C3-8C37-458E-B65F-CB06AB9F5038} = {682E4782-97FC-4DBA-9C6B-A606946F50DA}
 		{A7C43422-928E-4356-94A9-F51C627DBDCA} = {682E4782-97FC-4DBA-9C6B-A606946F50DA}
+		{3663F2B9-E2C9-4564-B609-4371F5F01C58} = {682E4782-97FC-4DBA-9C6B-A606946F50DA}
 	EndGlobalSection
 EndGlobal
