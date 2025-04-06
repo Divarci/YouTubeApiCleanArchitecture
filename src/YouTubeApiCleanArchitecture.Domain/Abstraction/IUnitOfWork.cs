@@ -1,4 +1,6 @@
-﻿namespace YouTubeApiCleanArchitecture.Domain.Abstraction;
+﻿using YouTubeApiCleanArchitecture.Domain.Abstraction.Entity;
+
+namespace YouTubeApiCleanArchitecture.Domain.Abstraction;
 public interface IUnitOfWork
 {
     Task CommitAsync(

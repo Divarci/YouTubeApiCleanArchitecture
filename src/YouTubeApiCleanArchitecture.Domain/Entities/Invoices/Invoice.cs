@@ -8,6 +8,7 @@ using YouTubeApiCleanArchitecture.Domain.Entities.Invoices.ValueObjects;
 using YouTubeApiCleanArchitecture.Domain.Entities.Invoices.DTOs;
 using YouTubeApiCleanArchitecture.Domain.Entities.Invoices.Events;
 using YouTubeApiCleanArchitecture.Domain.Exceptions;
+using YouTubeApiCleanArchitecture.Domain.Abstraction.Entity;
 
 namespace YouTubeApiCleanArchitecture.Domain.Entities.Invoices;
 public sealed class Invoice : BaseEntity

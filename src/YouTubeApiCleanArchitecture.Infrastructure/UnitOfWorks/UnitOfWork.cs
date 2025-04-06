@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using YouTubeApiCleanArchitecture.Domain.Abstraction;
+using YouTubeApiCleanArchitecture.Domain.Abstraction.Entity;
 using YouTubeApiCleanArchitecture.Domain.Exceptions;
 using YouTubeApiCleanArchitecture.Infrastructure.Repositories;
 

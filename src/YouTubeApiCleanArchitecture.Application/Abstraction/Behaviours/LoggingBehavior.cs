@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
 using Serilog.Context;
-using YouTubeApiCleanArchitecture.Domain.Abstraction;
+using YouTubeApiCleanArchitecture.Domain.Abstraction.ResultPattern;
 
 namespace YouTubeApiCleanArchitecture.Application.Abstraction.Behaviours;
 public class LoggingBehavior<TRequest, TResponse>(

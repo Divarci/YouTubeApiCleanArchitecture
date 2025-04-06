@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using YouTubeApiCleanArchitecture.Application.Abstraction.Messaging.Commands;
 using YouTubeApiCleanArchitecture.Domain.Abstraction;
+using YouTubeApiCleanArchitecture.Domain.Abstraction.ResultPattern;
 using YouTubeApiCleanArchitecture.Domain.Entities.Customers;
 using YouTubeApiCleanArchitecture.Domain.Entities.Products;
 

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using YouTubeApiCleanArchitecture.Domain.Abstraction;
+using YouTubeApiCleanArchitecture.Domain.Abstraction.DomainEvents;
 using YouTubeApiCleanArchitecture.Domain.Entities.Identity.Users.DTOs;
 using YouTubeApiCleanArchitecture.Domain.Entities.Identity.Users.Events;
 using YouTubeApiCleanArchitecture.Domain.Exceptions;

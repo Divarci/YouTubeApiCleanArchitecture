@@ -1,4 +1,4 @@
-﻿using YouTubeApiCleanArchitecture.Domain.Abstraction;
+﻿using YouTubeApiCleanArchitecture.Domain.Abstraction.Entity;
 using YouTubeApiCleanArchitecture.Domain.Entities.Customers.DTOs;
 using YouTubeApiCleanArchitecture.Domain.Entities.Customers.Events;
 using YouTubeApiCleanArchitecture.Domain.Entities.Customers.ValueObject;

@@ -1,4 +1,4 @@
-﻿using YouTubeApiCleanArchitecture.Domain.Abstraction;
+﻿using YouTubeApiCleanArchitecture.Domain.Abstraction.ResultPattern;
 
 namespace YouTubeApiCleanArchitecture.Application.Features.Identity.AppUsers.Commands.LoginUser;
 public class LoginUserResponse : IResult

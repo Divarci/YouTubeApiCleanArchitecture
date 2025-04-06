@@ -3,7 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using YouTubeApiCleanArchitecture.Application.Abstraction.Messaging.Commands;
 using YouTubeApiCleanArchitecture.Application.Abstraction.TokenProviding;
-using YouTubeApiCleanArchitecture.Domain.Abstraction;
+using YouTubeApiCleanArchitecture.Domain.Abstraction.ResultPattern;
 using YouTubeApiCleanArchitecture.Domain.Entities.Identity.Users;
 
 namespace YouTubeApiCleanArchitecture.Application.Features.Identity.AppUsers.Commands.RefreshToken;

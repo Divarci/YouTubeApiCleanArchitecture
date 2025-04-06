@@ -3,6 +3,7 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using YouTubeApiCleanArchitecture.Application.Abstraction.Messaging.Queries;
 using YouTubeApiCleanArchitecture.Domain.Abstraction;
+using YouTubeApiCleanArchitecture.Domain.Abstraction.ResultPattern;
 using YouTubeApiCleanArchitecture.Domain.Entities.Customers;
 
 namespace YouTubeApiCleanArchitecture.Application.Features.Customers.Queries.GetAllCustomers;

@@ -1,4 +1,4 @@
-﻿using YouTubeApiCleanArchitecture.Domain.Abstraction;
+﻿using YouTubeApiCleanArchitecture.Domain.Abstraction.Entity;
 using YouTubeApiCleanArchitecture.Domain.Entities.InvoiceItems.ValueObjects;
 using YouTubeApiCleanArchitecture.Domain.Entities.Invoices;
 using YouTubeApiCleanArchitecture.Domain.Entities.Shared;

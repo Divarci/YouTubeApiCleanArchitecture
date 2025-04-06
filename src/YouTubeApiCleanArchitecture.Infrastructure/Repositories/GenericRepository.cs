@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using YouTubeApiCleanArchitecture.Domain.Abstraction;
+using YouTubeApiCleanArchitecture.Domain.Abstraction.Entity;
 
 namespace YouTubeApiCleanArchitecture.Infrastructure.Repositories;
 public class GenericRepository<TEntity>(

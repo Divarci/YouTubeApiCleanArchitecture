@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using YouTubeApiCleanArchitecture.Domain.Abstraction;
+using YouTubeApiCleanArchitecture.Domain.Abstraction.ResultPattern;
 using YouTubeApiCleanArchitecture.Domain.Entities.Products;
 
 namespace YouTubeApiCleanArchitecture.Application.Features.Products;
