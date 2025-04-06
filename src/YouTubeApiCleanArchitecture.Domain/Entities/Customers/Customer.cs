@@ -3,6 +3,7 @@ using YouTubeApiCleanArchitecture.Domain.Entities.Customers.DTOs;
 using YouTubeApiCleanArchitecture.Domain.Entities.Customers.Events;
 using YouTubeApiCleanArchitecture.Domain.Entities.Customers.ValueObject;
 using YouTubeApiCleanArchitecture.Domain.Entities.Invoices;
+using YouTubeApiCleanArchitecture.Domain.Entities.Invoices.Events;
 using YouTubeApiCleanArchitecture.Domain.Entities.Shared;
 
 namespace YouTubeApiCleanArchitecture.Domain.Entities.Customers;
@@ -65,5 +66,14 @@ public sealed class Customer : BaseEntity
     public void DecreaseBalance(Money invoiceAmount)
         => Balance = new Money(
             Balance.Value - invoiceAmount.Value);
+
+    public void RemoveInvoice(Invoice invoice)
+    {
+        Invoices.Remove(invoice);
+
+        RaiseDomainEvent(new InvoiceRemovedDomainEvent(
+            Id,
+            invoice.TotalBalance));
+    }
 
 }
