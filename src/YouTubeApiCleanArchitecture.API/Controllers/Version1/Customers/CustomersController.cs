@@ -8,10 +8,11 @@ using YouTubeApiCleanArchitecture.Application.Features.Customers.Commands.Update
 using YouTubeApiCleanArchitecture.Application.Features.Customers.Queries.GetAllCustomers;
 using YouTubeApiCleanArchitecture.Application.Features.Customers.Queries.GetCustomer;
 using YouTubeApiCleanArchitecture.Domain.Entities.Customers.DTOs;
+using YouTubeApiCleanArchitecture.Domain.Exceptions;
 
 namespace YouTubeApiCleanArchitecture.API.Controllers.Version1.Customers;
 
-[Authorize]    
+[Authorize]
 [ApiVersion(ApiVersions.V1)]
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]

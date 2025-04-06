@@ -1,7 +1,8 @@
 1- refactor - folder structure
 2- global exception abstraction
-3- invoice create and removed
 
+
+3- invoice create and removed
 4- autoseed issue
 
 5- repository methods.

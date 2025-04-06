@@ -1,4 +1,5 @@
 ﻿using Serilog.Context;
+using YouTubeApiCleanArchitecture.Domain.Abstraction;
 using YouTubeApiCleanArchitecture.Domain.Abstraction.ResultPattern;
 using YouTubeApiCleanArchitecture.Domain.Exceptions;
 
@@ -18,7 +19,7 @@ public class GlobalExceptionHandlingMiddleware(
             await _next(context);
         }
         catch (Exception exception)
-        {           
+        {
 
             var exceptionDetails = GetExceptionDetails(exception);
 
@@ -36,47 +37,12 @@ public class GlobalExceptionHandlingMiddleware(
     private static Result<NoContentDto> GetExceptionDetails(Exception exception) =>
         exception switch
         {
-            RequestValidationException validationException
-                => Result<NoContentDto>.Failed(
-                    StatusCodes.Status400BadRequest,
-                    validationException.Errors),
-
-            ConcurrencyException concurrencyException
-                => Result<NoContentDto>.Failed(
-                    StatusCodes.Status400BadRequest,
-                    concurrencyException.Errors),
-
-            NullObjectException nullObjectException
-                => Result<NoContentDto>.Failed(
-                    StatusCodes.Status400BadRequest,
-                    nullObjectException.Errors),
-
-            BadRequestException badRequestException
+            IBadRequest badRequestException
                 => Result<NoContentDto>.Failed(
                     StatusCodes.Status400BadRequest,
                     badRequestException.Errors),
 
-            PayloadFormatException payloadFormatException
-                => Result<NoContentDto>.Failed(
-                    StatusCodes.Status400BadRequest,
-                    payloadFormatException.Errors),
-
-            InvalidTokenException invalidTokenException
-                => Result<NoContentDto>.Failed(
-                    StatusCodes.Status400BadRequest,
-                    invalidTokenException.Errors),
-
-            AdminKeyNotMatchException adminKeyNotMatchException
-                => Result<NoContentDto>.Failed(
-                    StatusCodes.Status400BadRequest,
-                    adminKeyNotMatchException.Errors),
-
-            UserAlreadyExistException userAlreadyExistException
-                => Result<NoContentDto>.Failed(
-                    StatusCodes.Status400BadRequest,
-                    userAlreadyExistException.Errors),
-
-            InternalServerException InternalServerException
+            IINternalServerError InternalServerException
                 => Result<NoContentDto>.Failed(
                     StatusCodes.Status500InternalServerError,
                     InternalServerException.Errors),
