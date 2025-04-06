@@ -58,8 +58,12 @@ public sealed class Customer : BaseEntity
                 dto.Country);
     }
 
-    public void UpdateBalance(Money invoiceAmount)
+    public void IncreaseBalance(Money invoiceAmount)
         => Balance = new Money(
             Balance.Value + invoiceAmount.Value);
-    
+
+    public void DecreaseBalance(Money invoiceAmount)
+        => Balance = new Money(
+            Balance.Value - invoiceAmount.Value);
+
 }
