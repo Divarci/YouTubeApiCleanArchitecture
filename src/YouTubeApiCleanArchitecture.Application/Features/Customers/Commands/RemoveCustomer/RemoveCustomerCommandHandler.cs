@@ -16,10 +16,9 @@ internal sealed class RemoveCustomerCommandHandler(
         RemoveCustomerCommand request, 
         CancellationToken cancellationToken)
     {
-        var customer = await _unitOfWork.Repository<Customer>()
-          .GetAll()
+        var customer = await _unitOfWork.Repository<Customer>().QueryAsync(q => q
           .Include(x => x.Invoices)
-          .FirstOrDefaultAsync(x => x.Id == request.CustomerId, cancellationToken);
+          .FirstOrDefaultAsync(x => x.Id == request.CustomerId, cancellationToken));
 
         if (customer is null)
             return Result<NoContentDto>

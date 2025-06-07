@@ -15,6 +15,12 @@ public class GenericRepository<TEntity>(
             .AsNoTracking()
             .AsQueryable();
 
+    public TResult Query<TResult>(Func<IQueryable<TEntity>, TResult> query)
+        => query(GetAll());
+
+    public Task<TResult> QueryAsync<TResult>(Func<IQueryable<TEntity>, Task<TResult>> query)
+        => query(GetAll());
+
     public async Task<TEntity?> GetByIdAsync(
         Guid id,
         CancellationToken cancellationToken = default) 

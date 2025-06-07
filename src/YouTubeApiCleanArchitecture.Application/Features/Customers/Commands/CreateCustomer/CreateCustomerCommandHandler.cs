@@ -13,13 +13,13 @@ internal sealed class CreateCustomerCommandHandler(
     private readonly IMapper _mapper = mapper;
 
     public async Task<Result<CustomerResponse>> Handle(
-        CreateCustomerCommand request, 
+        CreateCustomerCommand request,
         CancellationToken cancellationToken)
     {
         var customer = Customer.Create(request.Dto);
 
         await _unitOfWork.Repository<Customer>()
-            .CreateAsync(customer);
+            .CreateAsync(customer, cancellationToken);
 
         await _unitOfWork.CommitAsync(cancellationToken);
 

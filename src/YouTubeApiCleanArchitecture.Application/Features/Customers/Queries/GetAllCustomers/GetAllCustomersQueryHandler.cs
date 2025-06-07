@@ -18,10 +18,9 @@ internal sealed class GetAllCustomersQueryHandler(
         GetAllCustomersQuery request,
         CancellationToken cancellationToken)
     {
-        var customers = await _unitOfWork.Repository<Customer>()
-            .GetAll()
+        var customers = await _unitOfWork.Repository<Customer>().QueryAsync(q => q
             .ProjectTo<CustomerResponse>(_mapper.ConfigurationProvider)
-            .ToListAsync(cancellationToken);
+            .ToListAsync(cancellationToken));
 
         var response = new CustomerResponseCollection
         {
@@ -29,6 +28,6 @@ internal sealed class GetAllCustomersQueryHandler(
         };
 
         return Result<CustomerResponseCollection>
-            .Success(response,200);
+            .Success(response, 200);
     }
 }
