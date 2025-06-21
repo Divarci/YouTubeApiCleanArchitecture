@@ -21,10 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\Customers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\src\YouTubeApiCleanArchitecture.Domain\YouTubeApiCleanArchitecture.Domain.csproj" />
   </ItemGroup>
 

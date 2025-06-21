@@ -1,12 +1,8 @@
-﻿using YouTubeApiCleanArchitecture.Domain.Abstraction.Entity;
-using YouTubeApiCleanArchitecture.Domain.Entities.Customers;
-using YouTubeApiCleanArchitecture.Domain.Entities.Customers.DTOs;
-using YouTubeApiCleanArchitecture.Domain.Entities.Customers.Events;
-using YouTubeApiCleanArchitecture.DomainTests.Data.Customers;
+﻿using YouTubeApiCleanArchitecture.DomainTests.Data.Customers;
 using YouTubeApiCleanArchitecture.DomainTests.Test.Shared;
 
 namespace YouTubeApiCleanArchitecture.DomainTests.Test.Customers;
-public class Domain_Customer_Create : BaseTest
+public class Domain_Customer_RemoveInvoice: BaseTest
 {
     [Fact]
     public void Customer_Create_ShouldReturnCustomer_Successfully()
@@ -30,20 +26,4 @@ public class Domain_Customer_Create : BaseTest
 
         });
     }
-
-    [Fact]
-    public void Customer_Create_ShouldRaiseDomainEvent_Successfully()
-    {
-        // Act
-
-        var customer = CustomerData.CreateCustomer();
-
-        // Assert
-
-        var domainEvent = HandleRaiseDomainEvent<CustomerCreatedDomainEvent>(customer);
-
-        Assert.Equal(customer.Id, domainEvent.CustomerId);
-    }
-
-
 }
