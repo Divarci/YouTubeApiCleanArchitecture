@@ -22,7 +22,10 @@
 
   <ItemGroup>
     <Folder Include="Data\Customers\" />
-    <Folder Include="Test\Customers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\YouTubeApiCleanArchitecture.Domain\YouTubeApiCleanArchitecture.Domain.csproj" />
   </ItemGroup>
 
 </Project>
