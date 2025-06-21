@@ -1,7 +1,10 @@
-﻿using YouTubeApiCleanArchitecture.Domain.Entities.Customers;
+﻿using System.Threading.Tasks;
+using YouTubeApiCleanArchitecture.Domain.Abstraction;
+using YouTubeApiCleanArchitecture.Domain.Entities.Customers;
 using YouTubeApiCleanArchitecture.Domain.Entities.Customers.DTOs;
 using YouTubeApiCleanArchitecture.Domain.Entities.Invoices;
 using YouTubeApiCleanArchitecture.Domain.Entities.Shared;
+using YouTubeApiCleanArchitecture.DomainTests.Data.Invoices;
 
 namespace YouTubeApiCleanArchitecture.DomainTests.Data.Customers;
 public static class CustomerData
@@ -35,8 +38,10 @@ public static class CustomerData
         return customer;
     }
 
-    public static Customer AddInvoice(this Customer customer,Invoice invoice)
+    public static async Task<Customer> AddInvoice(this Customer customer, IUnitOfWork unitOfWork)
     {
+        var invoice = await InvoiceData.CreateInvoice(unitOfWork);
+
         customer.Invoices.Add(invoice);
         return customer;
     }
